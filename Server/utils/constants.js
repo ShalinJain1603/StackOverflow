@@ -1,0 +1,45 @@
+module.exports.HOSTEL = [
+  "Brahmaputra",
+  "Umium",
+  "Kameng",
+  "Dihing",
+  "Dhansiri",
+  "Manas",
+  "Subhansiri",
+  "Siang",
+  "Lohit",
+  "Kapili",
+  "Disang",
+  "Dibang",
+];
+
+module.exports.DEPARTMENT = [
+  "Chemical",
+  "CSE",
+  "CST",
+  "BSBE",
+  "Mechanical",
+  "Civil",
+  "Mathematics",
+  "Design",
+  "EEE",
+  "ECE",
+  "EP",
+];
+
+module.exports.CLUB = [
+  "Cadence",
+  "Xpressions",
+  "Octaves",
+  "Finnese",
+  "Montage",
+  "Lumiere",
+  "LitSoc",
+  "DebSoc",
+  "CnA",
+  "Coding Club",
+  "Robotics",
+  "E-Cell",
+  "Automobiles",
+  "Astronomy",
+];
