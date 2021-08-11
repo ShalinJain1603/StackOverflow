@@ -3,7 +3,9 @@ const router = express.Router();
 const passport = require("passport");
 const { addUser, signinUser } = require("../Controllers/outlook");
 
-router.get("/auth/outlook", signinUser, (req, res) => {});
+router.get("/auth/outlook", signinUser, (req, res) => {
+  res.send("Successfully Signed In!!");
+});
 
 router.get(
   "/auth/outlook/callback",
@@ -13,7 +15,7 @@ router.get(
 
 router.get("/logout", (req, res) => {
   req.logout();
-  res.redirect("/");
+  res.redirect("http://localhost:3000/");
 });
 
 router.get("/isLoggedIn", (req, res) => {

@@ -7,10 +7,9 @@ const passport = require("passport");
 const session = require("express-session");
 const OutlookStrategy = require("passport-outlook").Strategy;
 const path = require("path");
-const isLoggedIn = require("./utils/isLoggedIn");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 const outlookroutes = require("./Routes/outlook");
 const dbUrl = "mongodb://localhost:27017/stackoverflow";
@@ -29,7 +28,6 @@ mongoose
   });
 
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
 
 // Passport-Outlook Config
 passport.serializeUser(function (user, done) {
@@ -45,7 +43,7 @@ passport.use(
     {
       clientID: process.env.OUTLOOK_CLIENT_ID,
       clientSecret: process.env.OUTLOOK_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/auth/outlook/callback",
+      callbackURL: "http://localhost:4000/auth/outlook/callback",
     },
     function (accessToken, refreshToken, profile, done) {
       process.nextTick(function () {
@@ -69,13 +67,10 @@ app.use((req, res, next) => {
 });
 // Home page
 app.get("/", (req, res) => {
-  res.render("index");
+  res.send("Connected to backend-server");
 });
 
 app.use("/", outlookroutes);
-app.get("/demo", isLoggedIn, (req, res) => {
-  res.render("demo");
-});
 
 app.listen(PORT, () => {
   console.log(`Server is running at port ${PORT}`);

@@ -11,7 +11,7 @@ module.exports.addUser = async (req, res) => {
     });
     await newUser.save();
   }
-  res.redirect("/demo");
+  res.redirect("http://localhost:3000/");
 };
 
 module.exports.signinUser = passport.authenticate("windowslive", {
