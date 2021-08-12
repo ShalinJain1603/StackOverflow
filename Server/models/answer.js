@@ -1,15 +1,12 @@
 const mongoose = require("mongoose");
 
-
 const answerSchema = new mongoose.Schema({
   author: {
-     
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'User' }
-    ,
-  
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
   text: {
-    required : true,
+    required: true,
     type: String,
   },
   voteCount: {
@@ -18,8 +15,7 @@ const answerSchema = new mongoose.Schema({
   postedOn: {
     type: Date,
   },
-  
 });
 
-const Answer = mongoose.model("Answer", ansSchema);
+const Answer = mongoose.model("Answer", answerSchema);
 module.exports = Answer;

@@ -12,6 +12,7 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 const outlookroutes = require("./Routes/outlook");
+const questionroutes = require("./Routes/questions");
 const dbUrl = "mongodb://localhost:27017/stackoverflow";
 mongoose
   .connect(dbUrl, {
@@ -28,6 +29,8 @@ mongoose
   });
 
 app.set("view engine", "ejs");
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Passport-Outlook Config
 passport.serializeUser(function (user, done) {
@@ -71,6 +74,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/", outlookroutes);
+app.use("/api/question", questionroutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running at port ${PORT}`);
