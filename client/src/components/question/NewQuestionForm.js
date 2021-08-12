@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import classes from './NewQuestionForm.module.css';
 import useInput from '../../hooks/use-input';
-
+import axios from 'axios';
 const NewQuestionForm = (props) => {
     const {
         value: title,
@@ -23,14 +23,14 @@ const NewQuestionForm = (props) => {
         reset: questionReset
     } = useInput(question => question.trim !== "");
 
-    const formSubmitHandler = (event) => {
+    const formSubmitHandler = async (event) => {
         event.preventDefault();
-        console.log(title, question);
-        // questionSubmitHandler function to be added
-        // props.questionSubmitHandler({
-        //     title,
-        //     question
-        // });
+        const data = {
+            title: title,
+            text: question
+        };
+        const res = await axios.post('/api/question/new', data);
+        console.log(res);
     }
 
     const formIsValid = titleIsValid && questionIsValid;
@@ -50,6 +50,7 @@ const NewQuestionForm = (props) => {
         {formIsValid && <button className={classes.submit}>
             Submit
         </button>}
+
     </form>
 }
 
