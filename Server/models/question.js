@@ -1,38 +1,34 @@
 const mongoose = require("mongoose");
 
-
 const questionSchema = new mongoose.Schema({
-  author: 
-     { 
-        type: Schema.Types.ObjectId, 
-        ref: 'User' 
-      },
-  
-    title: {
-      required : true,
-      type: String,
-      maxLength : 100,
-    },
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
+  title: {
+    required: true,
+    type: String,
+    maxLength: 100,
+  },
   text: {
-    required : true,
+    required: true,
     type: String,
   },
   tags: {
     type: [String],
   },
-  answers: 
-    [{ 
-        type: Schema.Types.ObjectId, 
-        ref: 'Answer' }]
-    ,
-  
+  answers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Answer",
+    },
+  ],
   voteCount: {
     type: Number,
   },
   postedOn: {
     type: Date,
   },
-  
 });
 
 const Question = mongoose.model("Question", questionSchema);
