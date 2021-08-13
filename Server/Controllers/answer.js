@@ -1,6 +1,7 @@
 const Answer = require("../models/answer");
 const Question = require("../models/question");
 const User = require("../models/user");
+const getDate = require("../utils/getDate");
 
 module.exports.addAnswer = async (req, res) => {
   const { id } = req.params;
@@ -9,6 +10,8 @@ module.exports.addAnswer = async (req, res) => {
   const answer = new Answer(req.body);
   answer.author = user;
   answer.voteCount = 0;
+  const date = `${getDate()}`;
+  answer.postedOn = new Date(date);
   question.answers.push(answer);
   await answer.save();
   await question.save();

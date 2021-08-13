@@ -1,9 +1,10 @@
 const Question = require("../models/question");
 const User = require("../models/user");
-const Answer = require("../models/answer");
+const Answer = require("../models/answer"); // For populating Answers field
+const getDate = require("../utils/getDate");
 
 module.exports.showAllQuestions = async (req, res) => {
-  const questions = await Question.find({});
+  const questions = await Question.find({}).populate("author");
   res.json(questions);
 };
 
@@ -19,8 +20,10 @@ module.exports.addQuestion = async (req, res) => {
   const user = await User.findOne({ outlook_id: req.user.id });
   const question = new Question(req.body);
   question.author = user;
+  question.voteCount = 0;
+  const date = `${getDate()}`;
+  question.postedOn = new Date(date);
   await question.save();
-  console.log(question);
   res.send("Added new question");
 };
 
