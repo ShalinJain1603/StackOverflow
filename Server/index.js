@@ -13,6 +13,8 @@ const PORT = process.env.PORT || 4000;
 
 const outlookroutes = require("./Routes/outlook");
 const questionroutes = require("./Routes/questions");
+const answerroutes = require("./Routes/answer");
+
 const dbUrl = "mongodb://localhost:27017/stackoverflow";
 mongoose
   .connect(dbUrl, {
@@ -29,6 +31,7 @@ mongoose
   });
 
 app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -71,10 +74,12 @@ app.use((req, res, next) => {
 // Home page
 app.get("/", (req, res) => {
   res.send("Connected to backend-server");
+  // res.render("testing");
 });
 
 app.use("/", outlookroutes);
 app.use("/api/question", questionroutes);
+app.use("/api/question", answerroutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running at port ${PORT}`);

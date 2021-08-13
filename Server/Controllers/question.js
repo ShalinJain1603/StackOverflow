@@ -1,5 +1,6 @@
 const Question = require("../models/question");
 const User = require("../models/user");
+const Answer = require("../models/answer");
 
 module.exports.showAllQuestions = async (req, res) => {
   const questions = await Question.find({});
@@ -8,7 +9,9 @@ module.exports.showAllQuestions = async (req, res) => {
 
 module.exports.showOneQuestion = async (req, res) => {
   const { id } = req.params;
-  const question = await Question.findById(id);
+  const question = await Question.findById(id)
+    .populate("author")
+    .populate("answers");
   res.json(question);
 };
 

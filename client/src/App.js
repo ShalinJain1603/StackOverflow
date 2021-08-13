@@ -5,7 +5,6 @@ import Router from "./router";
 function App() {
   return (
     <div className="App">
-      <h1> Stack Overflow</h1>
       <Header />
       <Router />
     </div>
