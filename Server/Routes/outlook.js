@@ -1,7 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
-const { addUser, signinUser } = require("../Controllers/outlook");
+const isLoggedIn = require("../utils/isLoggedIn");
+const {
+  loginUser,
+  signinUser,
+  registerUser,
+} = require("../Controllers/outlook");
 
 router.get("/auth/outlook", signinUser, (req, res) => {
   res.send("Successfully Signed In!!");
@@ -10,7 +15,7 @@ router.get("/auth/outlook", signinUser, (req, res) => {
 router.get(
   "/auth/outlook/callback",
   passport.authenticate("windowslive", { failureRedirect: "/" }),
-  addUser
+  loginUser
 );
 
 router.get("/logout", (req, res) => {
@@ -25,4 +30,7 @@ router.get("/isLoggedIn", (req, res) => {
     res.json({ loggedIn: false });
   }
 });
+
+router.post("/registerUser", isLoggedIn, registerUser);
+
 module.exports = router;

@@ -4,11 +4,13 @@ import Auth from "./auth";
 import Private from "./components/private";
 import Public from "./components/public";
 import AddNewQuestion from "./components/question/NewQuestionForm";
+import RegisterUserForm from "./components/registerUser/RegisterUser";
 const Router = (props) => (
   <Switch>
     <Route exact path="/public" component={Public} />
-    <Route exact path="/question/new" component={AddNewQuestion} />
+    <PrivateRoute exact path="/question/new" component={AddNewQuestion} />
     <PrivateRoute path="/private" component={Private} />
+    <Route exact path="/register" component={RegisterUserForm} />
   </Switch>
 );
 

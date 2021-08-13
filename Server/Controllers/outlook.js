@@ -1,17 +1,13 @@
 const User = require("../models/user");
 const passport = require("passport");
 
-module.exports.addUser = async (req, res) => {
+module.exports.loginUser = async (req, res) => {
   const foundUser = await User.findOne({ outlook_id: req.user.id });
   if (!foundUser) {
-    const newUser = new User({
-      outlook_id: req.user.id,
-      email: req.user.emails[0].value,
-      username: req.user.displayName,
-    });
-    await newUser.save();
+    res.redirect("http://localhost:3000/register");
+  } else {
+    res.redirect("http://localhost:3000/");
   }
-  res.redirect("http://localhost:3000/");
 };
 
 module.exports.signinUser = passport.authenticate("windowslive", {
@@ -22,3 +18,18 @@ module.exports.signinUser = passport.authenticate("windowslive", {
     "https://outlook.office.com/Mail.Read",
   ],
 });
+
+module.exports.registerUser = async (req, res) => {
+  const foundUser = await User.findOne({ outlook_id: req.user.id });
+  if (!foundUser) {
+    const user = new User(req.body);
+    user.outlook_id = req.user.id;
+    user.email = req.user.emails[0].value;
+    user.username = req.user.displayName;
+    await user.save();
+    console.log(user);
+    res.send("User registered");
+  } else {
+    res.send("User already registered once");
+  }
+};
