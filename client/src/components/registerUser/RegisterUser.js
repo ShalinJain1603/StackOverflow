@@ -1,8 +1,10 @@
 import axios from "axios";
 import React from "react";
+import { useHistory } from "react-router-dom";
 import useInput from "../../hooks/use-input";
 import classes from "./RegisterUser.module.css";
 const RegisterUserForm = (props) => {
+  const history = useHistory();
   const {
     value: firstname,
     isTouched: firstnameIsTouched,
@@ -64,6 +66,7 @@ const RegisterUserForm = (props) => {
     };
     const res = await axios.post("/registerUser", data);
     console.log(res);
+    history.push("/");
   };
 
   const formIsValid =
