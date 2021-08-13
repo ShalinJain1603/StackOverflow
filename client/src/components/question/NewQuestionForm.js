@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import classes from './NewQuestionForm.module.css';
 import useInput from '../../hooks/use-input';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 const NewQuestionForm = (props) => {
+    const history = useHistory();
     const {
         value: title,
         isTouched: titleIsTouched,
@@ -31,6 +33,7 @@ const NewQuestionForm = (props) => {
         };
         const res = await axios.post('/api/question/new', data);
         console.log(res);
+        history.push('/');
     }
 
     const formIsValid = titleIsValid && questionIsValid;
