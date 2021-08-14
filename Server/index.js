@@ -75,8 +75,8 @@ app.use((req, res, next) => {
 });
 // Home page
 app.get("/", (req, res) => {
-  // res.send("Connected to backend-server");
-  res.render("testing");
+  res.send("Connected to backend-server");
+  // res.render("testing");
 });
 
 app.use("/", outlookroutes);
