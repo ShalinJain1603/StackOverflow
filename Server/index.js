@@ -36,7 +36,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
+app.use(express.static(path.join(__dirname, "public")));
 // Passport-Outlook Config
 passport.serializeUser(function (user, done) {
   done(null, user);
@@ -75,8 +75,8 @@ app.use((req, res, next) => {
 });
 // Home page
 app.get("/", (req, res) => {
-  res.send("Connected to backend-server");
-  // res.render("testing");
+  // res.send("Connected to backend-server");
+  res.render("testing");
 });
 
 app.use("/", outlookroutes);
