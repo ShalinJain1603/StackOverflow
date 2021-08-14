@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const answerSchema = new mongoose.Schema({
+const replySchema = new mongoose.Schema({
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -15,11 +15,7 @@ const answerSchema = new mongoose.Schema({
   postedOn: {
     type: Date,
   },
-  replies: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Reply",
-  },
 });
 
-const Answer = mongoose.model("Answer", answerSchema);
-module.exports = Answer;
+const Reply = mongoose.model("Reply", replySchema);
+module.exports = Reply;
