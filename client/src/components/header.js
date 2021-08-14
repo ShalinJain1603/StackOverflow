@@ -33,7 +33,7 @@ const Header = (props) => {
   }, []);
   return (
     <div>
-      <Navbar dark expand="md" className="bg-dark fixed-top">
+      <Navbar dark expand="md" className="bg-dark ">
         <div className="container">
           <NavbarToggler onClick={toggleNav} />
           <NavbarBrand href="/">StackOverflow</NavbarBrand>
@@ -50,16 +50,15 @@ const Header = (props) => {
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink className="nav-link" to="/private">
-                  Private
-                </NavLink>
-              </NavItem>
-              <NavItem>
                 <NavLink className="nav-link" to="/questions/new">
                   New Question
                 </NavLink>
               </NavItem>
+              <NavItem></NavItem>
             </Nav>
+            <NavLink className="nav-link" to="/user" hidden={!isloggedIn}>
+              Profile
+            </NavLink>
             <button
               onClick={login}
               id="login"
