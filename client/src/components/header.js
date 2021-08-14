@@ -55,7 +55,7 @@ const Header = (props) => {
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink className="nav-link" to="/question/new">
+                <NavLink className="nav-link" to="/questions/new">
                   New Question
                 </NavLink>
               </NavItem>

@@ -44,7 +44,7 @@ const QuestionDetail = (props) => {
 
             (<div>
                 <h1> {question.title} </h1>
-                {question.author}
+                {question.author.username}
                 <p> {question.text}</p>
                 {question.tags.map((tag) => {
                     <h2> {tag}</h2>
