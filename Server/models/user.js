@@ -29,14 +29,12 @@ const userSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    required: true,
   },
   username: {
     type: String,
   },
   outlook_id: {
     type: String,
-    required: true,
   },
 });
 
