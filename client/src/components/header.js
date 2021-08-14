@@ -50,11 +50,6 @@ const Header = (props) => {
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink className="nav-link" to="/private">
-                  Private
-                </NavLink>
-              </NavItem>
-              <NavItem>
                 <NavLink className="nav-link" to="/questions/new">
                   New Question
                 </NavLink>
@@ -66,7 +61,7 @@ const Header = (props) => {
               className="btn btn-link"
               hidden={isloggedIn}
             >
-              <a href="http://localhost:4000/auth/outlook">Login</a>
+              <a href="http://localhost:4000/auth/outlook">SignUp / Login</a>
             </button>
             <br />
             <button
