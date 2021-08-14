@@ -11,7 +11,7 @@ module.exports.showAllQuestions = async (req, res) => {
 module.exports.showOneQuestion = async (req, res) => {
   const { id } = req.params;
   const question = await Question.findById(id)
-    .populate("author")
+    .populate("author", "firstname")
     .populate("answers");
   res.json(question);
 };
@@ -21,8 +21,7 @@ module.exports.addQuestion = async (req, res) => {
   const question = new Question(req.body);
   question.author = user;
   question.voteCount = 0;
-  const date = `${getDate()}`;
-  question.postedOn = new Date(date);
+  question.postedOn = new Date(`${getDate()}`);
   await question.save();
   res.send("Added new question");
 };
