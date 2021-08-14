@@ -50,6 +50,11 @@ const Header = (props) => {
                 </NavLink>
               </NavItem>
               <NavItem>
+                <NavLink className="nav-link" to="/private">
+                  Private
+                </NavLink>
+              </NavItem>
+              <NavItem>
                 <NavLink className="nav-link" to="/questions/new">
                   New Question
                 </NavLink>
