@@ -33,7 +33,7 @@ const Header = (props) => {
   }, []);
   return (
     <div>
-      <Navbar dark expand="md" className="bg-dark">
+      <Navbar dark expand="md" className="bg-dark fixed-top">
         <div className="container">
           <NavbarToggler onClick={toggleNav} />
           <NavbarBrand href="/">StackOverflow</NavbarBrand>
