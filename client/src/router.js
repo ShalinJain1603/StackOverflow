@@ -9,8 +9,8 @@ import AllQuestions from './components/question/AllQuestions';
 const Router = (props) => (
   <Switch>
     <Route exact path="/public" component={Public} />
-    <Route exact path="/question/new" component={AddNewQuestion} />
-    <Route exact path="/question/detail" component={QuestionDetail} />
+    <Route exact path="/questions/new" component={AddNewQuestion} />
+    <Route exact path="/questions/:questionId" component={QuestionDetail} />
     <Route exact path="/questions" component={AllQuestions} />
     <PrivateRoute path="/protected" component={Private} />
   </Switch>
