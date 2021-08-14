@@ -14,6 +14,8 @@ const PORT = process.env.PORT || 4000;
 const outlookroutes = require("./Routes/outlook");
 const questionroutes = require("./Routes/questions");
 const answerroutes = require("./Routes/answer");
+const replyroutes = require("./Routes/replyAnswer");
+const userroutes = require("./Routes/user");
 
 const dbUrl = "mongodb://localhost:27017/stackoverflow";
 mongoose
@@ -78,8 +80,10 @@ app.get("/", (req, res) => {
 });
 
 app.use("/", outlookroutes);
+app.use("/api/profile", userroutes);
 app.use("/api/question", questionroutes);
 app.use("/api/question", answerroutes);
+app.use("/api/question", replyroutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running at port ${PORT}`);
