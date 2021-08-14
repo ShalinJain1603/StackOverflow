@@ -1,6 +1,7 @@
 const Question = require("../models/question");
 const User = require("../models/user");
 const Answer = require("../models/answer"); // For populating Answers field
+const Reply = require("../models/replyAnswer"); // For populating Replies field
 const getDate = require("../utils/getDate");
 
 module.exports.showAllQuestions = async (req, res) => {
@@ -11,8 +12,13 @@ module.exports.showAllQuestions = async (req, res) => {
 module.exports.showOneQuestion = async (req, res) => {
   const { id } = req.params;
   const question = await Question.findById(id)
-    .populate("author")
-    .populate("answers");
+    .populate("author", "firstname")
+    .populate({
+      path: "answers",
+      populate: {
+        path: "replies",
+      },
+    });
   res.json(question);
 };
 
@@ -21,15 +27,14 @@ module.exports.addQuestion = async (req, res) => {
   const question = new Question(req.body);
   question.author = user;
   question.voteCount = 0;
-  const date = `${getDate()}`;
-  question.postedOn = new Date(date);
+  question.postedOn = new Date(`${getDate()}`);
   await question.save();
   res.send("Added new question");
 };
 
 module.exports.editQuestion = async (req, res) => {
   const { id } = req.params;
-  const question = await Question.findByIdAndUpdate(id, { text: "Meowww" });
+  const question = await Question.findByIdAndUpdate(id, req.body);
   console.log(question);
   res.send("Edited question");
 };

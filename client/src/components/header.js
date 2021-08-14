@@ -33,7 +33,7 @@ const Header = (props) => {
   }, []);
   return (
     <div>
-      <Navbar dark expand="md" className="bg-dark">
+      <Navbar dark expand="md" className="bg-dark fixed-top">
         <div className="container">
           <NavbarToggler onClick={toggleNav} />
           <NavbarBrand href="/">StackOverflow</NavbarBrand>
@@ -45,8 +45,8 @@ const Header = (props) => {
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink className="nav-link" to="/public">
-                  Public
+                <NavLink className="nav-link" to="/questions">
+                  All Questions
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -66,7 +66,7 @@ const Header = (props) => {
               className="btn btn-link"
               hidden={isloggedIn}
             >
-              <a href="http://localhost:4000/auth/outlook">Login</a>
+              <a href="http://localhost:4000/auth/outlook">SignUp / Login</a>
             </button>
             <br />
             <button
