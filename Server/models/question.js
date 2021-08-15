@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const Answer = require("./answer");
 const questionSchema = new mongoose.Schema({
   author: {
     type: mongoose.Schema.Types.ObjectId,
@@ -29,6 +29,12 @@ const questionSchema = new mongoose.Schema({
   postedOn: {
     type: Date,
   },
+});
+
+questionSchema.post("findOneAndDelete", async (data) => {
+  data.answers.map((answer) => {
+    await Answer.findByIdAndDelete(answer);
+  });
 });
 
 const Question = mongoose.model("Question", questionSchema);
