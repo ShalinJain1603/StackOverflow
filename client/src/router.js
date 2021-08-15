@@ -6,14 +6,12 @@ import AddNewQuestion from "./components/question/NewQuestionForm";
 import QuestionDetail from "./components/question/QuestionDetail";
 import RegisterUserForm from "./components/registerUser/RegisterUser";
 import UserProfile from "./components/userprofile/Userprofile";
-import AddAnswerReply from "./components/answer-reply/AddAnswerReply";
 const Router = (props) => (
   <Switch>
     <PrivateRoute exact path="/questions/new" component={AddNewQuestion} />
     <Route exact path="/questions/:questionId" component={QuestionDetail} />
     <Route exact path="/questions" component={AllQuestions} />
     <Route exact path="/register" component={RegisterUserForm} />
-    <Route exact path="/addanswerreply" component={AddAnswerReply} />
     <PrivateRoute exact path="/user" component={UserProfile} />
   </Switch>
 );

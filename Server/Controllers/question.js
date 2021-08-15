@@ -15,12 +15,14 @@ module.exports.showOneQuestion = async (req, res) => {
     .populate("author", "firstname")
     .populate({
       path: "answers",
-      populate: {
-        path: "replies",
-      },
-      populate: {
-        path: "author",
-      },
+      populate: [
+        {
+          path: "replies",
+        },
+        {
+          path: "author",
+        },
+      ],
     });
   res.json(question);
 };
