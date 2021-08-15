@@ -31,8 +31,8 @@ const questionSchema = new mongoose.Schema({
   },
 });
 
-questionSchema.post("findOneAndDelete", async (data) => {
-  data.answers.map((answer) => {
+questionSchema.post("findOneAndDelete", (data) => {
+  data.answers.map(async (answer) => {
     await Answer.findByIdAndDelete(answer);
   });
 });
