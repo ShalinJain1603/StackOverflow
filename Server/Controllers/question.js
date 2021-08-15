@@ -18,6 +18,9 @@ module.exports.showOneQuestion = async (req, res) => {
       populate: {
         path: "replies",
       },
+      populate: {
+        path: "author",
+      },
     });
   res.json(question);
 };
