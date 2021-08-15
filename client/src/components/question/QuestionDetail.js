@@ -1,6 +1,8 @@
 import axios from "axios";
 import { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import AddAnswer from '../answer/AddAnswer';
+import AddAnswerReply from '../answer-reply/AddAnswerReply';
 
 const QuestionDetail = (props) => {
   const [question, setQuestion] = useState(null);
@@ -51,6 +53,7 @@ const QuestionDetail = (props) => {
           })}
         </div>
       )}
+      {question && <AddAnswer questionId={questionId} />}
       {
         <div>
           <h1> Sort Answers by</h1>
@@ -63,9 +66,12 @@ const QuestionDetail = (props) => {
         question.answers.length &&
         question.answers.sort(answerSorting()).map((answer) => (
           <div>
-            <h1> {answer.author.firstname}</h1>
-            <p>{answer.text}</p>
-            <h2> {answer.voteCount}</h2>
+            <div>
+              <h1> {answer.author.firstname}</h1>
+              <p>{answer.text}</p>
+              <h2> {answer.voteCount}</h2>
+            </div>
+            <AddAnswerReply questionId={questionId} answerId={answer._id} />
           </div>
         ))}
     </Fragment>

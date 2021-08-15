@@ -15,10 +15,10 @@ const answerSchema = new mongoose.Schema({
   postedOn: {
     type: Date,
   },
-  replies: {
+  replies: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Reply",
-  },
+  }],
 });
 
 const Answer = mongoose.model("Answer", answerSchema);
