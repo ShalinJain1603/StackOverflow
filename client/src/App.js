@@ -1,6 +1,6 @@
 import "./App.css";
 import Footer from "./components/footer";
-import Header from "./components/header";
+import Header from "./components/header/header";
 import Router from "./router";
 
 function App() {

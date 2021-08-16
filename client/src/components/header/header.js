@@ -9,7 +9,7 @@ import {
   NavbarToggler,
   NavItem,
 } from "reactstrap";
-import Auth from "../auth";
+import Auth from "../../auth";
 import classes from "./styles.module.css";
 
 const Header = (props) => {

@@ -49,6 +49,7 @@ class TagComponent extends React.Component {
         minQueryLength={1}
         autoresize={false}
         noSuggestionsText={"No tags found"}
+        maxSuggestionsLength={10}
       />
     );
   }
