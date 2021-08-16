@@ -1,10 +1,13 @@
 import axios from "axios";
-import React from "react";
+import {useState, Fragment} from "react";
 import { useHistory } from "react-router-dom";
 import useInput from "../../hooks/use-input";
 import TagComponent from "../tags";
 import classes from "./NewQuestionForm.module.css";
+import Modal from '../UI/Modal';
+
 const NewQuestionForm = (props) => {
+  const [showModal, setShowModal] = useState(false);
   const history = useHistory();
   const {
     value: title,
@@ -39,9 +42,22 @@ const NewQuestionForm = (props) => {
       tags: names,
     };
     const res = await axios.post("/api/question/new", data);
-    console.log(res);
+    setShowModal(true);
+    //console.log(res);
+    
+  };
+  const closeModal = () => {
+    setShowModal(false);
     history.push("/questions");
   };
+
+  
+  const successMessage = (
+    <div>
+      <h2> Question Added :)</h2>
+      <button onClick = {closeModal}> Close</button>
+    </div>
+  );
 
   const formIsValid = titleIsValid && questionIsValid;
   const titleClass = `${classes.control} ${
@@ -52,6 +68,8 @@ const NewQuestionForm = (props) => {
   }`;
 
   return (
+    <Fragment>
+      {showModal && <Modal onClick = {closeModal}>{successMessage}</Modal>}
     <form onSubmit={formSubmitHandler} className={classes.form}>
       <div>
         <label htmlFor="title">Title </label>
@@ -81,7 +99,8 @@ const NewQuestionForm = (props) => {
       <TagComponent />
 
       {formIsValid && <button className={classes.submit}>Submit</button>}
-    </form>
+      </form>
+      </Fragment>
   );
 };
 

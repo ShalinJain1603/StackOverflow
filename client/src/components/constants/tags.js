@@ -5,7 +5,7 @@ export const TAGS = [
   { id: 4, name: "Manthan" },
   { id: 5, name: "Spardha" },
   { id: 6, name: "Brahmaputra" },
-  { id: 7, name: "Umium" },
+  { id: 7, name: "Umiam" },
   { id: 8, name: "Kameng" },
   { id: 9, name: "Dihing" },
   { id: 10, name: "Dhansiri" },
