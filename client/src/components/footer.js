@@ -9,7 +9,7 @@ class Footer extends Component {
 
   render() {
     return (
-      <div className="footer fixed-bottom">
+      <div className="footer mt-auto">
         <div className="container-fluid bg-dark text-white">
           <div className="row ">
             <div className="col-auto">
