@@ -46,6 +46,9 @@ class TagComponent extends React.Component {
           suggestionDisabled: "is-disabled",
           suggestionPrefix: "react-tags__suggestion-prefix",
         }}
+        minQueryLength={1}
+        autoresize={false}
+        noSuggestionsText={"No tags found"}
       />
     );
   }
