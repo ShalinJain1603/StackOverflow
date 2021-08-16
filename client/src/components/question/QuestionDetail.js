@@ -48,6 +48,8 @@ const QuestionDetail = (props) => {
           <h1> {question.title} </h1>
           {question.author.firstname}
           <p> {question.text}</p>
+          <p>{question.tags}</p>
+
           {question.tags.map((tag) => {
             <h2> {tag}</h2>;
           })}

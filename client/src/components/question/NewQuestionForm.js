@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useHistory } from "react-router-dom";
 import useInput from "../../hooks/use-input";
+import TagComponent from "../tags";
 import classes from "./NewQuestionForm.module.css";
 const NewQuestionForm = (props) => {
   const history = useHistory();
@@ -27,9 +28,15 @@ const NewQuestionForm = (props) => {
 
   const formSubmitHandler = async (event) => {
     event.preventDefault();
+    const tags = document.querySelectorAll(".react-tags__selected-tag-name");
+    const names = [];
+    for (const tag of tags) {
+      names.push(tag.innerText);
+    }
     const data = {
       title: title,
       text: question,
+      tags: names,
     };
     const res = await axios.post("/api/question/new", data);
     console.log(res);
@@ -43,6 +50,7 @@ const NewQuestionForm = (props) => {
   const questionClass = `${classes.control} ${
     questionHasError ? classes.invalid : ""
   }`;
+
   return (
     <form onSubmit={formSubmitHandler} className={classes.form}>
       <div>
@@ -69,6 +77,9 @@ const NewQuestionForm = (props) => {
           <p className={classes.parainvalid}>Question can't be empty</p>
         )}
       </div>
+
+      <TagComponent />
+
       {formIsValid && <button className={classes.submit}>Submit</button>}
     </form>
   );
