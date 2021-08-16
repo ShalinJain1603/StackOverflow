@@ -1,18 +1,13 @@
 import React from "react";
 import ReactTags from "react-tag-autocomplete";
-
+import { TAGS } from "./constants/tags";
 class TagComponent extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       tags: [],
-      suggestions: [
-        { id: 1, name: "Hostel" },
-        { id: 2, name: "Club" },
-        { id: 3, name: "Academic" },
-        { id: 4, name: "Manthan" },
-      ],
+      suggestions: TAGS,
     };
 
     this.reactTags = React.createRef();

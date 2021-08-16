@@ -77,7 +77,9 @@ const NewQuestionForm = (props) => {
           <p className={classes.parainvalid}>Question can't be empty</p>
         )}
       </div>
+
       <TagComponent />
+
       {formIsValid && <button className={classes.submit}>Submit</button>}
     </form>
   );

@@ -11,6 +11,7 @@ module.exports.HOSTEL = [
   "Kapili",
   "Disang",
   "Dibang",
+  "Barak",
 ];
 
 module.exports.DEPARTMENT = [
@@ -42,6 +43,7 @@ module.exports.CLUB = [
   "E-Cell",
   "Automobiles",
   "Astronomy",
+  "IIG.AI",
 ];
 
 module.exports.LETTERHEADS = {
