@@ -1,9 +1,9 @@
 import axios from "axios";
 import { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Badge } from "reactstrap";
 import AddAnswerReply from "../answer-reply/AddAnswerReply";
 import AddAnswer from "../answer/AddAnswer";
-
 const QuestionDetail = (props) => {
   const [question, setQuestion] = useState(null);
   const { questionId } = useParams();
@@ -45,14 +45,14 @@ const QuestionDetail = (props) => {
       {!question && <p>Loading ...</p>}
       {question && (
         <div>
-          <h1> {question.title} </h1>
+          <h1 className="d-inline-block"> {question.title} </h1>
+          {question.tags.map((tag) => (
+            <Badge className="bg-warning mx-1 mb-1 text-dark">{tag}</Badge>
+          ))}
+
+          <br />
           {question.author.firstname}
           <p> {question.text}</p>
-          <p>{question.tags}</p>
-
-          {question.tags.map((tag) => {
-            <h2> {tag}</h2>;
-          })}
         </div>
       )}
       {question && <AddAnswer questionId={questionId} />}
