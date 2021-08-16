@@ -32,6 +32,20 @@ class TagComponent extends React.Component {
         suggestions={this.state.suggestions}
         onDelete={this.onDelete.bind(this)}
         onAddition={this.onAddition.bind(this)}
+        classNames={{
+          root: "react-tags ms-3 mt-1",
+          rootFocused: "is-focused",
+          selected: "react-tags__selected border",
+          selectedTag: "react-tags__selected-tag btn btn-info m-1",
+          selectedTagName: "react-tags__selected-tag-name",
+          search: "react-tags__search",
+          searchWrapper: "react-tags__search-wrapper",
+          searchInput: "react-tags__search-input",
+          suggestions: "react-tags__suggestions ms-1",
+          suggestionActive: "is-active",
+          suggestionDisabled: "is-disabled",
+          suggestionPrefix: "react-tags__suggestion-prefix",
+        }}
       />
     );
   }
