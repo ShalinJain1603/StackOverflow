@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { Offcanvas } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import {
   Collapse,
   Nav,
@@ -48,7 +48,23 @@ const Header = (props) => {
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>StackOverflow</Offcanvas.Title>
         </Offcanvas.Header>
-        <Offcanvas.Body>Hello</Offcanvas.Body>
+        <Offcanvas.Body>
+          <Link to="/" onClick={handleClose}>
+            Home
+          </Link>
+          <br />
+          <Link to="/questions" onClick={handleClose}>
+            All Questions
+          </Link>
+          <br />
+          <Link to="/questions/new" onClick={handleClose}>
+            New Question
+          </Link>
+          <br />
+          <Link to="/user" onClick={handleClose}>
+            Profile
+          </Link>
+        </Offcanvas.Body>
       </Offcanvas>
       <Navbar dark expand="md" className="bg-dark ">
         <div className="container">
