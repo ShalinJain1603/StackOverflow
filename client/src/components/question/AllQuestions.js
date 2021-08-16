@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { Fragment, useEffect, useState } from "react";
+import SearchField from "react-search-field";
 import { Card, CardBody, CardTitle } from "reactstrap";
 const AllQuestions = () => {
   const [questions, setQuestions] = useState(null);
+  const [safeQuestions, setSafeQuestions] = useState(null);
   const [sortBy, setSortBy] = useState("Newest");
   useEffect(() => {
     console.log("AllQuestions");
@@ -10,6 +12,7 @@ const AllQuestions = () => {
       const { data } = await axios.get("/api/question");
       console.log(data);
       setQuestions(data);
+      setSafeQuestions(data);
     };
     allQuestions();
   }, []);
@@ -39,10 +42,22 @@ const AllQuestions = () => {
     setSortBy("Votes");
   };
 
+  const onChangeHandler = (event) => {
+    if (event === "") {
+      setQuestions(safeQuestions);
+    } else {
+      const filteredQuestions = safeQuestions.filter((ques) =>
+        ques.title.toLowerCase().includes(event.toLowerCase())
+      );
+      setQuestions(filteredQuestions);
+    }
+  };
+
   return (
     <Fragment>
       <div className="container">
         <h1 className="display-3">All Questions Page </h1>
+        <SearchField onChange={onChangeHandler} />
         {!questions && <p> Loading...</p>}
         {questions && (
           <div>
