@@ -1,10 +1,13 @@
 import axios from "axios";
 import React, { Fragment, useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import SearchField from "react-search-field";
 import { Card, CardBody, CardTitle } from "reactstrap";
+import classes from "./AllQuestion.module.css";
 const AllQuestions = () => {
   const [questions, setQuestions] = useState(null);
   const [safeQuestions, setSafeQuestions] = useState(null);
+  const history = useHistory();
   const [sortBy, setSortBy] = useState("Newest");
   useEffect(() => {
     console.log("AllQuestions");
@@ -58,7 +61,15 @@ const AllQuestions = () => {
       <div className="container">
         <h1 className="display-3">All Questions Page </h1>
         <SearchField onChange={onChangeHandler} />
-        {!questions && <p> Loading...</p>}
+        {!questions && (
+          <p className="m-3">
+            <div class="d-flex justify-content-center">
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          </p>
+        )}
         {questions && (
           <div>
             <h5 className="h5">Sort by</h5>
@@ -80,22 +91,27 @@ const AllQuestions = () => {
         )}
         {questions &&
           questions.sort(questionSorting()).map((question) => (
-            <div className="my-3">
-              <Card>
-                <CardBody>
-                  <CardTitle>
-                    <h5> {question.title}</h5>
-                  </CardTitle>
-                  <p className="text-muted">
-                    {" "}
-                    Posted by: {question.author.username}
-                  </p>
-                  <p> Upvotes : {question.voteCount}</p>
-                  <h5>{question.text}</h5>
-                  <p> {question.answers.length} Replies</p>
-                </CardBody>
-              </Card>
-            </div>
+            <Link
+              to={`/questions/${question._id}`}
+              className={classes.getDetails}
+            >
+              <div className="my-3">
+                <Card>
+                  <CardBody>
+                    <CardTitle>
+                      <h5> {question.title}</h5>
+                    </CardTitle>
+                    <p className="text-muted">
+                      {" "}
+                      Posted by: {question.author.username}
+                    </p>
+                    <p> Upvotes : {question.voteCount}</p>
+                    <h5>{question.text}</h5>
+                    <p> {question.answers.length} Replies</p>
+                  </CardBody>
+                </Card>
+              </div>
+            </Link>
           ))}
       </div>
     </Fragment>

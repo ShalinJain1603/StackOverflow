@@ -5,7 +5,7 @@ import Router from "./router";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App d-flex flex-column vh-100">
       <Header />
       <Router />
       <Footer />

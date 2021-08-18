@@ -28,6 +28,14 @@ module.exports.showOneQuestion = async (req, res) => {
   res.json(question);
 };
 
+module.exports.showByTags = async (req, res) => {
+  const { Tags } = req.body;
+  const questions = await Question.find({
+    tags: { $elemMatch: { $in: Tags } },
+  });
+  res.json(questions);
+};
+
 module.exports.addQuestion = async (req, res) => {
   const user = await User.findOne({ outlook_id: req.user.id });
   const question = new Question(req.body);
