@@ -9,6 +9,7 @@ const {
   editQuestion,
   deleteQuestion,
   showOneQuestion,
+  addVote
 } = require("../Controllers/question");
 
 router.get("/", showAllQuestions);
@@ -16,5 +17,6 @@ router.post("/new", isLoggedIn, addQuestion);
 router.get("/:id", showOneQuestion);
 router.post("/:id/edit", isLoggedIn, isAuthor, editQuestion);
 router.post("/:id/delete", isLoggedIn, isAuthor, deleteQuestion);
+router.post("/:id/vote", isLoggedIn, addVote);
 
 module.exports = router;
