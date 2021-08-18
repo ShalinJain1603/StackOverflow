@@ -77,7 +77,11 @@ const QuestionDetail = (props) => {
           <br />
           {question.author.firstname}
           <p> {question.text}</p>
-          <h2> {question.voteCount} upvotes</h2>
+          <h2>
+            {" "}
+            {question.voteCount} Vote
+            {Math.abs(question.voteCount) === 1 ? "" : "s"}
+          </h2>
           <button onClick={upVoteHandler}>Upvote </button>
           <button onClick={downVoteHandler}>Downvote </button>
         </div>
@@ -95,7 +99,11 @@ const QuestionDetail = (props) => {
         question.answers.length &&
         question.answers.sort(answerSorting()).map((answer) => (
           <div>
-            <Answer answer={answer} questionId={questionId} setQuestion={setQuestion} />
+            <Answer
+              answer={answer}
+              questionId={questionId}
+              setQuestion={setQuestion}
+            />
             <AddAnswerReply questionId={questionId} answerId={answer._id} />
             {question &&
               answer.replies.length &&

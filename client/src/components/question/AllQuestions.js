@@ -105,7 +105,7 @@ const AllQuestions = () => {
                       {" "}
                       Posted by: {question.author.username}
                     </p>
-                    <p> Upvotes : {question.voteCount}</p>
+                    <p> Votes : {question.voteCount}</p>
                     <h5>{question.text}</h5>
                     <p> {question.answers.length} Replies</p>
                   </CardBody>
