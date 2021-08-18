@@ -19,6 +19,12 @@ const QuestionDetail = (props) => {
     fetchQuestion();
   }, []);
 
+  const upVoteHandler = async (event) => {
+    event.preventDefault();
+    const data = await axios.post(`/api/question/${questionId}/vote`, { vote: 1 });
+    console.log(data);
+  }
+
   const sortByNewest = () => {
     setAnswersSortType("Newest");
   };
@@ -45,14 +51,19 @@ const QuestionDetail = (props) => {
       {!question && <p>Loading ...</p>}
       {question && (
         <div>
-          <h1> {question.title} </h1>
-          {question.author.firstname}
-          <p> {question.text}</p>
-          <p>{question.tags}</p>
+          <div>
+            <h1> {question.title} </h1>
+            <h2> {question.voteCount} upvotes</h2>
+            {question.author.firstname}
+            <p> {question.text}</p>
+            <p>{question.tags}</p>
 
-          {question.tags.map((tag) => {
-            <h2> {tag}</h2>;
-          })}
+
+            {question.tags.map((tag) => {
+              <h2> {tag}</h2>;
+            })}
+          </div>
+          <button onClick={upVoteHandler}>Upvote </button>
         </div>
       )}
       {question && <AddAnswer questionId={questionId} />}
