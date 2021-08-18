@@ -1,10 +1,10 @@
 import axios from "axios";
-import {useState, Fragment} from "react";
+import { Fragment, useState } from "react";
 import { useHistory } from "react-router-dom";
 import useInput from "../../hooks/use-input";
 import TagComponent from "../tags";
+import Modal from "../UI/Modal";
 import classes from "./NewQuestionForm.module.css";
-import Modal from '../UI/Modal';
 
 const NewQuestionForm = (props) => {
   const [showModal, setShowModal] = useState(false);
@@ -44,18 +44,16 @@ const NewQuestionForm = (props) => {
     const res = await axios.post("/api/question/new", data);
     setShowModal(true);
     //console.log(res);
-    
   };
   const closeModal = () => {
     setShowModal(false);
     history.push("/questions");
   };
 
-  
   const successMessage = (
     <div>
       <h2> Question Added :)</h2>
-      <button onClick = {closeModal}> Close</button>
+      <button onClick={closeModal}> Close</button>
     </div>
   );
 
@@ -69,38 +67,38 @@ const NewQuestionForm = (props) => {
 
   return (
     <Fragment>
-      {showModal && <Modal onClick = {closeModal}>{successMessage}</Modal>}
-    <form onSubmit={formSubmitHandler} className={classes.form}>
-      <div>
-        <label htmlFor="title">Title </label>
-        <input
-          type="text"
-          id="title"
-          onChange={titleOnChange}
-          onBlur={titleOnBlur}
-        />
-        {titleHasError && (
-          <p className={classes.parainvalid}>Title can't be empty</p>
-        )}
-      </div>
-      <div>
-        <label htmlFor="Question">Question </label>
-        <input
-          type="text"
-          id="Question"
-          onChange={questionOnChange}
-          onBlur={questionOnBlur}
-        />
-        {questionHasError && (
-          <p className={classes.parainvalid}>Question can't be empty</p>
-        )}
-      </div>
+      {showModal && <Modal onClick={closeModal}>{successMessage}</Modal>}
+      <form onSubmit={formSubmitHandler} className={classes.form}>
+        <div>
+          <label htmlFor="title">Title </label>
+          <input
+            type="text"
+            id="title"
+            onChange={titleOnChange}
+            onBlur={titleOnBlur}
+          />
+          {titleHasError && (
+            <p className={classes.parainvalid}>Title can't be empty</p>
+          )}
+        </div>
+        <div>
+          <label htmlFor="Question">Question </label>
+          <input
+            type="text"
+            id="Question"
+            onChange={questionOnChange}
+            onBlur={questionOnBlur}
+          />
+          {questionHasError && (
+            <p className={classes.parainvalid}>Question can't be empty</p>
+          )}
+        </div>
 
-      <TagComponent />
+        <TagComponent tags={[]} />
 
-      {formIsValid && <button className={classes.submit}>Submit</button>}
+        {formIsValid && <button className={classes.submit}>Submit</button>}
       </form>
-      </Fragment>
+    </Fragment>
   );
 };
 
