@@ -61,7 +61,15 @@ const AllQuestions = () => {
       <div className="container">
         <h1 className="display-3">All Questions Page </h1>
         <SearchField onChange={onChangeHandler} />
-        {!questions && <p> Loading...</p>}
+        {!questions && (
+          <p className="m-3">
+            <div class="d-flex justify-content-center">
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          </p>
+        )}
         {questions && (
           <div>
             <h5 className="h5">Sort by</h5>

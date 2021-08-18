@@ -1,3 +1,12 @@
 .offcanvas {
     max-width: 270px;
 }
+.sidebarToggle {
+    margin: 15px;
+}
+
+@media (max-width: 770px) {
+    .sidebarToggle {
+        display: none;
+    }
+}

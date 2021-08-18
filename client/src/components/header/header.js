@@ -69,7 +69,7 @@ const Header = (props) => {
       <Navbar dark expand="md" className="bg-dark ">
         <div className="container">
           <NavbarToggler onClick={toggleNav} />
-          <span onClick={handleShow} className="me-3">
+          <span onClick={handleShow} className={classes.sidebarToggle}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"

@@ -42,7 +42,15 @@ const QuestionDetail = (props) => {
   };
   return (
     <Fragment>
-      {!question && <p>Loading ...</p>}
+      {!question && (
+        <p className="m-3">
+          <div class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </p>
+      )}
       {question && (
         <div>
           <h1 className="d-inline-block"> {question.title} </h1>
