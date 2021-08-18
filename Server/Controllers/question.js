@@ -54,7 +54,12 @@ module.exports.deleteQuestion = async (req, res) => {
 
 module.exports.addVote = async (req, res) => {
   const { id } = req.params;
-  const question = await Question.findById(id).populate("votes");
+  const question = await Question.findById(id).populate({
+    path: "votes",
+    populate: ({
+      path: "user"
+    })
+  });
   const userId = req.user.id;
   const user = await User.findOne({ outlook_id: userId });
   const vote = req.body.vote;
@@ -64,30 +69,20 @@ module.exports.addVote = async (req, res) => {
       vote
     }
   );
-  //console.log(newVote);
+  await newVote.save();
   if (!(vote == 0 || vote == 1 || vote == -1)) {
     res.send("Invalid Vote");
   }
-  const existingVote = question.votes.find(v => v?.user == user._id);
-  //console.log(existingVote, user._id);
+  const existingVote = question.votes.find(v => v.user._id.equals(user._id));
   if (existingVote) {
-    question.voteCount -= existingVote.vote;
-    if (vote == 0) {
-      question.votes.pull(existingVote);
-    }
-    else {
-      question.voteCount += vote;
-      question.votes.push(newVote);
-    }
+    question.voteCount += vote - existingVote.vote;
+    question.votes.pull(existingVote);
+    question.votes.push(newVote);
   }
   else if (vote != 0) {
     question.voteCount += vote;
-    console.log("before push", question.votes);
-    console.log(newVote);
     question.votes.push(newVote);
-    console.log("after push", question.votes);
   }
   await question.save();
-  //console.log(question.votes);
   res.send("Vote added");
 }

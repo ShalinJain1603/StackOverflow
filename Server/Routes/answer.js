@@ -2,8 +2,10 @@ const express = require("express");
 const router = express.Router();
 const isLoggedIn = require("../utils/isLoggedIn");
 const isAuthorAnswer = require("../utils/isAuthorAnswer");
-const { addAnswer, deleteAnswer } = require("../Controllers/answer");
+
+const { addAnswer, deleteAnswer, addVoteToAnswer } = require("../Controllers/answer");
 router.post("/:id/answer", isLoggedIn, addAnswer);
 router.post("/:id/answer/:answerId", isLoggedIn, isAuthorAnswer, deleteAnswer);
+router.post("/:id/answer/:answerId/addVote", isLoggedIn, addVoteToAnswer);
 
 module.exports = router;

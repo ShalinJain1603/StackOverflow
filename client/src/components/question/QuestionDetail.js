@@ -3,6 +3,7 @@ import { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import AddAnswerReply from "../answer-reply/AddAnswerReply";
 import AddAnswer from "../answer/AddAnswer";
+import Answer from "../answer/Answer";
 
 const QuestionDetail = (props) => {
   const [question, setQuestion] = useState(null);
@@ -24,6 +25,13 @@ const QuestionDetail = (props) => {
     const data = await axios.post(`/api/question/${questionId}/vote`, { vote: 1 });
     console.log(data);
   }
+  const downVoteHandler = async (event) => {
+    event.preventDefault();
+    const data = await axios.post(`/api/question/${questionId}/vote`, { vote: -1 });
+    console.log(data);
+  }
+
+
 
   const sortByNewest = () => {
     setAnswersSortType("Newest");
@@ -64,6 +72,7 @@ const QuestionDetail = (props) => {
             })}
           </div>
           <button onClick={upVoteHandler}>Upvote </button>
+          <button onClick={downVoteHandler}>Downvote </button>
         </div>
       )}
       {question && <AddAnswer questionId={questionId} />}
@@ -79,11 +88,7 @@ const QuestionDetail = (props) => {
         question.answers.length &&
         question.answers.sort(answerSorting()).map((answer) => (
           <div>
-            <div>
-              <h1> {answer.author.firstname}</h1>
-              <h3>{answer.text}</h3>
-              <h2> {answer.voteCount}</h2>
-            </div>
+            <Answer answer={answer} questionId={questionId} />
             <AddAnswerReply questionId={questionId} answerId={answer._id} />
             {question &&
               answer.replies.length &&
