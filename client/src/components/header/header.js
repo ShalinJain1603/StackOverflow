@@ -64,6 +64,10 @@ const Header = (props) => {
           <Link to="/user" onClick={handleClose}>
             Profile
           </Link>
+          <br />
+          <Link to="/tags" onClick={handleClose}>
+            Tags
+          </Link>
         </Offcanvas.Body>
       </Offcanvas>
       <Navbar dark expand="md" className="bg-dark ">
