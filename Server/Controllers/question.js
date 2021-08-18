@@ -41,7 +41,8 @@ module.exports.addQuestion = async (req, res) => {
   const question = new Question(req.body);
   question.author = user;
   question.voteCount = 0;
-  question.postedOn = new Date(24 - 7 - 16);
+  console.log(getDate());
+  question.postedOn = new Date(`${getDate()}`);
   await question.save();
   res.send("Added new question");
 };
@@ -64,33 +65,30 @@ module.exports.addVote = async (req, res) => {
   const { id } = req.params;
   const question = await Question.findById(id).populate({
     path: "votes",
-    populate: ({
-      path: "user"
-    })
+    populate: {
+      path: "user",
+    },
   });
   const userId = req.user.id;
   const user = await User.findOne({ outlook_id: userId });
   const vote = req.body.vote;
-  const newVote = new Vote(
-    {
-      user: user._id,
-      vote
-    }
-  );
+  const newVote = new Vote({
+    user: user._id,
+    vote,
+  });
   await newVote.save();
   if (!(vote == 0 || vote == 1 || vote == -1)) {
     res.send("Invalid Vote");
   }
-  const existingVote = question.votes.find(v => v.user._id.equals(user._id));
+  const existingVote = question.votes.find((v) => v.user._id.equals(user._id));
   if (existingVote) {
     question.voteCount += vote - existingVote.vote;
     question.votes.pull(existingVote);
     question.votes.push(newVote);
-  }
-  else if (vote != 0) {
+  } else if (vote != 0) {
     question.voteCount += vote;
     question.votes.push(newVote);
   }
   await question.save();
   res.send("Vote added");
-}
+};

@@ -5,6 +5,7 @@ import AllQuestions from "./components/question/AllQuestions";
 import AddNewQuestion from "./components/question/NewQuestionForm";
 import QuestionDetail from "./components/question/QuestionDetail";
 import RegisterUserForm from "./components/registerUser/RegisterUser";
+import AllQuestionsByTag from "./components/Tags/AllQuestionsByTags";
 import UserProfile from "./components/userprofile/Userprofile";
 const Router = (props) => (
   <Switch>
@@ -12,6 +13,7 @@ const Router = (props) => (
     <Route exact path="/questions/:questionId" component={QuestionDetail} />
     <Route exact path="/questions" component={AllQuestions} />
     <Route exact path="/register" component={RegisterUserForm} />
+    <Route exact path="/tags" component={AllQuestionsByTag} />
     <PrivateRoute exact path="/user" component={UserProfile} />
   </Switch>
 );

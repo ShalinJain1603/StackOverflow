@@ -35,7 +35,7 @@ class TagComponent extends React.Component {
         classNames={{
           root: "react-tags ms-3 mt-1",
           rootFocused: "is-focused",
-          selected: "react-tags__selected border",
+          selected: "react-tags__selected border w-50 min-height",
           selectedTag: "react-tags__selected-tag btn btn-info m-1",
           selectedTagName: "react-tags__selected-tag-name",
           search: "react-tags__search",
@@ -50,6 +50,7 @@ class TagComponent extends React.Component {
         autoresize={false}
         noSuggestionsText={"No tags found"}
         maxSuggestionsLength={10}
+        placeholderText={"Add a tag"}
       />
     );
   }
