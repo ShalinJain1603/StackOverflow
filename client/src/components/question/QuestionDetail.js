@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { Badge } from "reactstrap";
 import AddAnswerReply from "../answer-reply/AddAnswerReply";
 import AddAnswer from "../answer/AddAnswer";
+
 const QuestionDetail = (props) => {
   const [question, setQuestion] = useState(null);
   const { questionId } = useParams();
@@ -18,6 +19,21 @@ const QuestionDetail = (props) => {
 
     fetchQuestion();
   }, []);
+
+  const upVoteHandler = async (event) => {
+    event.preventDefault();
+    const data = await axios.post(`/api/question/${questionId}/vote`, {
+      vote: 1,
+    });
+    console.log(data);
+  };
+  const downVoteHandler = async (event) => {
+    event.preventDefault();
+    const data = await axios.post(`/api/question/${questionId}/vote`, {
+      vote: -1,
+    });
+    console.log(data);
+  };
 
   const sortByNewest = () => {
     setAnswersSortType("Newest");
@@ -57,10 +73,12 @@ const QuestionDetail = (props) => {
           {question.tags.map((tag) => (
             <Badge className="bg-warning mx-1 mb-1 text-dark">{tag}</Badge>
           ))}
-
           <br />
           {question.author.firstname}
           <p> {question.text}</p>
+          <h2> {question.voteCount} upvotes</h2>
+          <button onClick={upVoteHandler}>Upvote </button>
+          <button onClick={downVoteHandler}>Downvote </button>
         </div>
       )}
       {question && <AddAnswer questionId={questionId} />}
@@ -76,19 +94,19 @@ const QuestionDetail = (props) => {
         question.answers.length &&
         question.answers.sort(answerSorting()).map((answer) => (
           <div>
-            <div>
-              <h1> {answer.author.firstname}</h1>
-              <h3>{answer.text}</h3>
-              <h2> {answer.voteCount}</h2>
-            </div>
+            <Answer answer={answer} questionId={questionId} />
             <AddAnswerReply questionId={questionId} answerId={answer._id} />
             {question &&
               answer.replies.length &&
-              answer.replies.sort(answerSorting()).map((reply) => (
-                <div>
-                  <p> {reply.text}</p>
-                </div>
-              ))}
+              answer.replies
+                .sort(answerSorting())
+                .map((reply) => (
+                  <AnswerReply
+                    reply={reply}
+                    questionId={questionId}
+                    answerId={answer._id}
+                  />
+                ))}
           </div>
         ))}
     </Fragment>

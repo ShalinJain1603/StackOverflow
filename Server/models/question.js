@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
 const Answer = require("./answer");
+const Vote = require("./votes");
+
+
 const questionSchema = new mongoose.Schema({
   author: {
     type: mongoose.Schema.Types.ObjectId,
@@ -29,6 +32,12 @@ const questionSchema = new mongoose.Schema({
   postedOn: {
     type: Date,
   },
+  votes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Vote"
+    }
+  ]
 });
 
 questionSchema.post("findOneAndDelete", (data) => {

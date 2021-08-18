@@ -15,6 +15,12 @@ const replySchema = new mongoose.Schema({
   postedOn: {
     type: Date,
   },
+  votes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Vote"
+    }
+  ]
 });
 
 const Reply = mongoose.model("Reply", replySchema);

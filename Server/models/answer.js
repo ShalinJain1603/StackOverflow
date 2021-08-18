@@ -22,6 +22,12 @@ const answerSchema = new mongoose.Schema({
       ref: "Reply",
     },
   ],
+  votes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Vote"
+    }
+  ]
 });
 
 answerSchema.post("findOneAndDelete", async (data) => {
