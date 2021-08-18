@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import AddAnswerReply from "../answer-reply/AddAnswerReply";
 import AddAnswer from "../answer/AddAnswer";
 import Answer from "../answer/Answer";
+import AnswerReply from "../answer-reply/AnswerReply";
 
 const QuestionDetail = (props) => {
   const [question, setQuestion] = useState(null);
@@ -93,9 +94,7 @@ const QuestionDetail = (props) => {
             {question &&
               answer.replies.length &&
               answer.replies.sort(answerSorting()).map((reply) => (
-                <div>
-                  <p> {reply.text}</p>
-                </div>
+                <AnswerReply reply={reply} questionId={questionId} answerId={answer._id} />
               ))}
           </div>
         ))}
