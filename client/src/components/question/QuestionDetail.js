@@ -16,7 +16,6 @@ const QuestionDetail = (props) => {
     const fetchQuestion = async () => {
       const { data } = await axios.get(`/api/question/${questionId}`);
       setQuestion(data);
-      console.log(data);
     };
 
     fetchQuestion();
@@ -24,17 +23,17 @@ const QuestionDetail = (props) => {
 
   const upVoteHandler = async (event) => {
     event.preventDefault();
-    const data = await axios.post(`/api/question/${questionId}/vote`, {
+    const { data } = await axios.post(`/api/question/${questionId}/vote`, {
       vote: 1,
     });
-    console.log(data);
+    setQuestion(data);
   };
   const downVoteHandler = async (event) => {
     event.preventDefault();
-    const data = await axios.post(`/api/question/${questionId}/vote`, {
+    const { data } = await axios.post(`/api/question/${questionId}/vote`, {
       vote: -1,
     });
-    console.log(data);
+    setQuestion(data);
   };
 
   const sortByNewest = () => {
@@ -96,7 +95,7 @@ const QuestionDetail = (props) => {
         question.answers.length &&
         question.answers.sort(answerSorting()).map((answer) => (
           <div>
-            <Answer answer={answer} questionId={questionId} />
+            <Answer answer={answer} questionId={questionId} setQuestion={setQuestion} />
             <AddAnswerReply questionId={questionId} answerId={answer._id} />
             {question &&
               answer.replies.length &&
@@ -107,6 +106,7 @@ const QuestionDetail = (props) => {
                     reply={reply}
                     questionId={questionId}
                     answerId={answer._id}
+                    setQuestion={setQuestion}
                   />
                 ))}
           </div>

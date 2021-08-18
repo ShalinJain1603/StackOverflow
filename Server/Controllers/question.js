@@ -41,8 +41,8 @@ module.exports.addQuestion = async (req, res) => {
   const question = new Question(req.body);
   question.author = user;
   question.voteCount = 0;
-  console.log(getDate());
-  question.postedOn = new Date(`${getDate()}`);
+  //console.log(getDate());
+  question.postedOn = new Date(24 - 7 - 2020);
   await question.save();
   res.send("Added new question");
 };
@@ -63,12 +63,27 @@ module.exports.deleteQuestion = async (req, res) => {
 
 module.exports.addVote = async (req, res) => {
   const { id } = req.params;
-  const question = await Question.findById(id).populate({
-    path: "votes",
-    populate: {
-      path: "user",
-    },
-  });
+  const question = await Question.findById(id)
+    .populate("author", "firstname")
+    .populate({
+      path: "answers",
+      populate: [
+        {
+          path: "replies",
+        },
+        {
+          path: "author",
+        },
+      ],
+    })
+    .populate({
+      path: "votes",
+      populate: [
+        {
+          path: "user"
+        }
+      ]
+    });
   const userId = req.user.id;
   const user = await User.findOne({ outlook_id: userId });
   const vote = req.body.vote;
@@ -90,5 +105,6 @@ module.exports.addVote = async (req, res) => {
     question.votes.push(newVote);
   }
   await question.save();
-  res.send("Vote added");
+  console.log(question);
+  res.json(question);
 };

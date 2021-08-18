@@ -5,12 +5,12 @@ const Answer = (props) => {
     const answerUpVoteHandler = async (event) => {
         event.preventDefault();
         const { data } = await axios.post(`/api/question/${props.questionId}/answer/${props.answer._id}/addVote`, { vote: 1 });
-        console.log("answer upvoted!!!", data);
+        props.setQuestion(data);
     }
     const answerDownVoteHandler = async (event) => {
         event.preventDefault();
         const { data } = await axios.post(`/api/question/${props.questionId}/answer/${props.answer._id}/addVote`, { vote: -1 });
-        console.log("answer upvoted!!!", data);
+        props.setQuestion(data); console.log("answer upvoted!!!", data);
     }
     return <div>
         <h1> {props.answer.author.firstname}</h1>

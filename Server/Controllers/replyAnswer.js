@@ -2,6 +2,7 @@ const Answer = require("../models/answer");
 const Reply = require("../models/replyAnswer");
 const User = require("../models/user");
 const Vote = require("../models/votes");
+const Question = require("../models/question");
 const getDate = require("../utils/getDate");
 
 module.exports.addReply = async (req, res) => {
@@ -27,7 +28,7 @@ module.exports.deleteReply = async (req, res) => {
 };
 
 module.exports.addVote = async (req, res) => {
-  const { replyId } = req.params;
+  const { id, replyId } = req.params;
   const reply = await Reply.findById(replyId).populate({
     path: "votes",
     populate: ({
@@ -58,5 +59,26 @@ module.exports.addVote = async (req, res) => {
     reply.votes.push(newVote);
   }
   await reply.save();
-  res.send("Vote added");
+  const question = await Question.findById(id)
+    .populate("author", "firstname")
+    .populate({
+      path: "answers",
+      populate: [
+        {
+          path: "replies",
+        },
+        {
+          path: "author",
+        },
+      ],
+    })
+    .populate({
+      path: "votes",
+      populate: [
+        {
+          path: "user"
+        }
+      ]
+    });
+  res.json(question);
 }

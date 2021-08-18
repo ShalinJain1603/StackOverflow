@@ -27,7 +27,7 @@ module.exports.deleteAnswer = async (req, res) => {
 };
 
 module.exports.addVoteToAnswer = async (req, res) => {
-  const { answerId } = req.params;
+  const { id, answerId } = req.params;
   const answer = await Answer.findById(answerId).populate({
     path: "votes",
     populate: ({
@@ -58,5 +58,26 @@ module.exports.addVoteToAnswer = async (req, res) => {
     answer.votes.push(newVote);
   }
   await answer.save();
-  res.send("Vote added");
+  const question = await Question.findById(id)
+    .populate("author", "firstname")
+    .populate({
+      path: "answers",
+      populate: [
+        {
+          path: "replies",
+        },
+        {
+          path: "author",
+        },
+      ],
+    })
+    .populate({
+      path: "votes",
+      populate: [
+        {
+          path: "user"
+        }
+      ]
+    });
+  res.json(question);
 }

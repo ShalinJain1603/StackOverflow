@@ -4,12 +4,12 @@ const AnswerReply = (props) => {
     const replyUpVoteHandler = async (event) => {
         event.preventDefault();
         const { data } = await axios.post(`/api/question/${props.questionId}/answer/${props.answerId}/reply/${props.reply._id}/addVote`, { vote: 1 });
-        console.log(data);
+        props.setQuestion(data);
     }
     const replyDownVoteHandler = async (event) => {
         event.preventDefault();
         const { data } = await axios.post(`/api/question/${props.questionId}/answer/${props.answerId}/reply/${props.reply._id}/addVote`, { vote: -1 });
-        console.log(data);
+        props.setQuestion(data);
     }
 
     return <div>
