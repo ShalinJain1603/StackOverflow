@@ -3,7 +3,9 @@ import { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Badge } from "reactstrap";
 import AddAnswerReply from "../answer-reply/AddAnswerReply";
+import AnswerReply from "../answer-reply/AnswerReply";
 import AddAnswer from "../answer/AddAnswer";
+import Answer from "../answer/Answer";
 
 const QuestionDetail = (props) => {
   const [question, setQuestion] = useState(null);
