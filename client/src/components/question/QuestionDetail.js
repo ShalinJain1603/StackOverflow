@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Fragment, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { Badge } from "reactstrap";
 import AddAnswerReply from "../answer-reply/AddAnswerReply";
 import AnswerReply from "../answer-reply/AnswerReply";
@@ -11,7 +11,7 @@ const QuestionDetail = (props) => {
   const [question, setQuestion] = useState(null);
   const { questionId } = useParams();
   const [answerSortType, setAnswersSortType] = useState("Oldest");
-
+  const history = useHistory();
   useEffect(() => {
     const fetchQuestion = async () => {
       const { data } = await axios.get(`/api/question/${questionId}`);
@@ -57,6 +57,11 @@ const QuestionDetail = (props) => {
         break;
     }
   };
+
+  const ReDirectHandler = () => {
+    history.push(`/questions/${questionId}/edit`);
+  };
+
   return (
     <Fragment>
       {!question && (
@@ -74,6 +79,8 @@ const QuestionDetail = (props) => {
           {question.tags.map((tag) => (
             <Badge className="bg-warning mx-1 mb-1 text-dark">{tag}</Badge>
           ))}
+          <br />
+          <button onClick={ReDirectHandler}>Edit</button>
           <br />
           {question.author.firstname}
           <p> {question.text}</p>

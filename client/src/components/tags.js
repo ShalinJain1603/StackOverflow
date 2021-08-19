@@ -6,7 +6,7 @@ class TagComponent extends React.Component {
     super(props);
 
     this.state = {
-      tags: [],
+      tags: this.props.tags,
       suggestions: TAGS,
     };
 

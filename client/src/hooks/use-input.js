@@ -1,34 +1,39 @@
-import React, { useState } from 'react';
+import { useState } from "react";
 
-const useInput = (validateValue) => {
-    const [value, setValue] = useState('');
-    const [isTouched, setIsTouched] = useState(false);
+const useInput = (validateValue, initialValue = "") => {
+  const [value, setValue] = useState(initialValue);
+  const [isTouched, setIsTouched] = useState(false);
 
-    const valueIsValid = validateValue(value);
-    const hasError = !valueIsValid && isTouched;
+  const valueIsValid = validateValue(value);
+  const hasError = !valueIsValid && isTouched;
 
-    const onBlur = () => {
-        setIsTouched(true);
-    }
+  const onBlur = () => {
+    setIsTouched(true);
+  };
 
-    const onChange = (event) => {
-        setValue(event.target.value);
-    }
+  const onChange = (event) => {
+    setValue(event.target.value);
+  };
 
-    const reset = () => {
-        setValue('');
-        setIsTouched(false);
-    }
+  const reset = () => {
+    setValue("");
+    setIsTouched(false);
+  };
 
-    return {
-        value,
-        isTouched,
-        valueIsValid,
-        hasError,
-        onBlur,
-        onChange,
-        reset
-    }
-}
+  const onset = (value) => {
+    setValue(value);
+  };
+
+  return {
+    value,
+    isTouched,
+    valueIsValid,
+    hasError,
+    onBlur,
+    onChange,
+    onset,
+    reset,
+  };
+};
 
 export default useInput;

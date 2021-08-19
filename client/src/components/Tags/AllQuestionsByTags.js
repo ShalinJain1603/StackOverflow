@@ -56,7 +56,7 @@ const AllQuestionsByTag = () => {
           similar questions. Using the right tags makes it easier for others to
           find and answer your question.
         </h5>
-        <TagComponent />
+        <TagComponent tags={[]} />
         <button
           onClick={searchByTag}
           className="btn btn-success btn-sm ms-3 my-2"

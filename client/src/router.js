@@ -2,19 +2,28 @@ import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import Auth from "./auth";
 import AllQuestions from "./components/question/AllQuestions";
+import EditQuestionForm from "./components/question/EditQuestion";
 import AddNewQuestion from "./components/question/NewQuestionForm";
 import QuestionDetail from "./components/question/QuestionDetail";
-import RegisterUserForm from "./components/registerUser/RegisterUser";
 import AllQuestionsByTag from "./components/Tags/AllQuestionsByTags";
+import EditUserForm from "./components/user/EditUser";
+import RegisterUserForm from "./components/user/RegisterUser";
 import UserProfile from "./components/userprofile/Userprofile";
+
 const Router = (props) => (
   <Switch>
     <PrivateRoute exact path="/questions/new" component={AddNewQuestion} />
     <Route exact path="/questions/:questionId" component={QuestionDetail} />
+    <Route
+      exact
+      path="/questions/:questionId/edit"
+      component={EditQuestionForm}
+    />
     <Route exact path="/questions" component={AllQuestions} />
     <Route exact path="/register" component={RegisterUserForm} />
     <Route exact path="/tags" component={AllQuestionsByTag} />
     <PrivateRoute exact path="/user" component={UserProfile} />
+    <PrivateRoute exact path="/user/edit" component={EditUserForm} />
   </Switch>
 );
 

@@ -1,14 +1,17 @@
 import axios from "axios";
-import { Fragment, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Fragment, useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import useInput from "../../hooks/use-input";
 import TagComponent from "../tags";
 import Modal from "../UI/Modal";
 import classes from "./NewQuestionForm.module.css";
-
-const NewQuestionForm = (props) => {
+const EditQuestionForm = (props) => {
   const [showModal, setShowModal] = useState(false);
+  const [currentTags, setcurrentTags] = useState(null);
+  const [status, setStatus] = useState("");
+  const { questionId } = useParams();
   const history = useHistory();
+
   const {
     value: title,
     isTouched: titleIsTouched,
@@ -17,6 +20,7 @@ const NewQuestionForm = (props) => {
     onBlur: titleOnBlur,
     onChange: titleOnChange,
     reset: titleReset,
+    onset: titlePreset,
   } = useInput((title) => title.trim() !== "");
 
   const {
@@ -27,7 +31,20 @@ const NewQuestionForm = (props) => {
     onBlur: questionOnBlur,
     onChange: questionOnChange,
     reset: questionReset,
+    onset: questionPreset,
   } = useInput((question) => question.trim !== "");
+
+  useEffect(() => {
+    const fetchQuestion = async () => {
+      const { data } = await axios.get(`/api/question/${questionId}`);
+      titlePreset(data.title);
+      questionPreset(data.text);
+      const tags = data.tags.map((tag) => ({ name: tag }));
+      setcurrentTags(tags);
+    };
+
+    fetchQuestion();
+  }, []);
 
   const formSubmitHandler = async (event) => {
     event.preventDefault();
@@ -41,29 +58,24 @@ const NewQuestionForm = (props) => {
       text: question,
       tags: names,
     };
-    const res = await axios.post("/api/question/new", data);
+    const res = await axios.post(`/api/question/${questionId}/edit`, data);
     setShowModal(true);
-    //console.log(res);
-  };
-  const closeModal = () => {
-    setShowModal(false);
-    history.push("/questions");
+    console.log(res);
+    setStatus(res.data);
   };
 
+  const closeModal = () => {
+    setShowModal(false);
+    history.push(`/questions/${questionId}`);
+  };
   const successMessage = (
     <div>
-      <h2> Question Added :)</h2>
+      <h2>{status}</h2>
       <button onClick={closeModal}> Close</button>
     </div>
   );
 
   const formIsValid = titleIsValid && questionIsValid;
-  const titleClass = `${classes.control} ${
-    titleHasError ? classes.invalid : ""
-  }`;
-  const questionClass = `${classes.control} ${
-    questionHasError ? classes.invalid : ""
-  }`;
 
   return (
     <Fragment>
@@ -76,10 +88,8 @@ const NewQuestionForm = (props) => {
             id="title"
             onChange={titleOnChange}
             onBlur={titleOnBlur}
+            value={title}
           />
-          {titleHasError && (
-            <p className={classes.parainvalid}>Title can't be empty</p>
-          )}
         </div>
         <div>
           <label htmlFor="Question">Question </label>
@@ -88,18 +98,18 @@ const NewQuestionForm = (props) => {
             id="Question"
             onChange={questionOnChange}
             onBlur={questionOnBlur}
+            value={question}
           />
           {questionHasError && (
             <p className={classes.parainvalid}>Question can't be empty</p>
           )}
         </div>
+        {currentTags && <TagComponent tags={currentTags} />}
 
-        <TagComponent tags={[]} />
-
-        {formIsValid && <button className={classes.submit}>Submit</button>}
+        {formIsValid && <button className={classes.submit}>Edit</button>}
       </form>
     </Fragment>
   );
 };
 
-export default NewQuestionForm;
+export default EditQuestionForm;
