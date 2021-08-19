@@ -62,6 +62,14 @@ const QuestionDetail = (props) => {
     history.push(`/questions/${questionId}/edit`);
   };
 
+  const DeleteHandler = async () => {
+    const res = await axios.post(`/api/question/${questionId}/delete`);
+    if (res.data === "Deleted Question") {
+      history.push("/questions");
+    } else {
+      console.log(res.data);
+    }
+  };
   return (
     <Fragment>
       {!question && (
@@ -81,6 +89,9 @@ const QuestionDetail = (props) => {
           ))}
           <br />
           <button onClick={ReDirectHandler}>Edit</button>
+          <br />
+          <br />
+          <button onClick={DeleteHandler}>Delete</button>
           <br />
           {question.author.firstname}
           <p> {question.text}</p>
