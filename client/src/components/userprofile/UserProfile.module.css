@@ -2,4 +2,18 @@
     width: 100px;
     height: 100px;
     border-radius: 50%;
+    border: 2px solid black;
+}
+
+.scroll {
+    max-height: 360px;
+    overflow: auto;
+}
+
+.getDetails{
+    text-decoration: none;
+    color: black;
+}
+.getDetails:hover{
+    color: black;
 }
