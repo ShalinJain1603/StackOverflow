@@ -18,16 +18,15 @@ const AddAnswer = (props) => {
 
     const addAnswerHandler = async (event) => {
         event.preventDefault();
-        console.log(answer, "answer");
         const ans = { text: answer };
-        const res = await axios.post(`/api/question/${props.questionId}/answer`, ans);
-        console.log(res);
-        history.push(`/questions/${props.questionId}`);
+        const { data } = await axios.post(`/api/question/${props.questionId}/answer`, ans);
+        answerReset();
+        props.setQuestion(data);
     }
     return <form onSubmit={addAnswerHandler}>
         <div>
             <label htmlFor='answer'>Add an answer </label>
-            <input type='text' id='answer' onBlur={answerOnBlur} onChange={answerOnChange} />
+            <input type='text' id='answer' value={answer} onBlur={answerOnBlur} onChange={answerOnChange} />
         </div>
         <button>
             Submit

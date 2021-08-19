@@ -26,7 +26,8 @@ const useInput = (validateValue) => {
         valueIsValid,
         hasError,
         onBlur,
-        onChange
+        onChange,
+        reset
     }
 }
 

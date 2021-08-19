@@ -86,7 +86,9 @@ const QuestionDetail = (props) => {
           <button onClick={downVoteHandler}>Downvote </button>
         </div>
       )}
-      {question && <AddAnswer questionId={questionId} />}
+      {question && (
+        <AddAnswer questionId={questionId} setQuestion={setQuestion} />
+      )}
       {
         <div>
           <h1> Sort Answers by</h1>
@@ -104,7 +106,11 @@ const QuestionDetail = (props) => {
               questionId={questionId}
               setQuestion={setQuestion}
             />
-            <AddAnswerReply questionId={questionId} answerId={answer._id} />
+            <AddAnswerReply
+              questionId={questionId}
+              answerId={answer._id}
+              setQuestion={setQuestion}
+            />
             {question &&
               answer.replies.length &&
               answer.replies
