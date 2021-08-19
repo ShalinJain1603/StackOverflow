@@ -32,6 +32,7 @@ const useInput = (validateValue, initialValue = "") => {
     onBlur,
     onChange,
     onset,
+    reset,
   };
 };
 
