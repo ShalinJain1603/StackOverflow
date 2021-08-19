@@ -4,7 +4,9 @@
 .sidebarToggle {
     margin: 15px;
 }
-
+.logo {
+    width: 100px;
+}
 @media (max-width: 770px) {
     .sidebarToggle {
         display: none;
