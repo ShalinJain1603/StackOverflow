@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { Fragment, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import classes from "./UserProfile.module.css";
 const UserProfile = (props) => {
   const [user, setUser] = useState(null);
+  const history = useHistory();
   useEffect(() => {
     console.log("User");
     const getUser = async () => {
@@ -13,11 +15,17 @@ const UserProfile = (props) => {
     getUser();
   }, []);
 
+  const ReDirectHandler = () => {
+    history.push("/user/edit");
+  };
+
   return (
     <Fragment>
       {!user && <p> Loading...</p>}
       {user && (
         <div>
+          <button onClick={ReDirectHandler}>Edit</button>
+          <br />
           <img src={user.image} className={classes.letterhead} />
           <h2>
             {user.firstname} {user.lastname}
