@@ -34,9 +34,9 @@ module.exports.addReply = async (req, res) => {
       path: "votes",
       populate: [
         {
-          path: "user"
-        }
-      ]
+          path: "user",
+        },
+      ],
     });
   console.log(question);
   res.json(question);
@@ -53,30 +53,27 @@ module.exports.addVote = async (req, res) => {
   const { id, replyId } = req.params;
   const reply = await Reply.findById(replyId).populate({
     path: "votes",
-    populate: ({
-      path: "user"
-    })
+    populate: {
+      path: "user",
+    },
   });
   const userId = req.user.id;
   const user = await User.findOne({ outlook_id: userId });
   const vote = req.body.vote;
-  const newVote = new Vote(
-    {
-      user: user._id,
-      vote
-    }
-  );
+  const newVote = new Vote({
+    user: user._id,
+    vote,
+  });
   await newVote.save();
   if (!(vote == 0 || vote == 1 || vote == -1)) {
     res.send("Invalid Vote");
   }
-  const existingVote = reply.votes.find(v => v.user._id.equals(user._id));
+  const existingVote = reply.votes.find((v) => v.user._id.equals(user._id));
   if (existingVote) {
     reply.voteCount += vote - existingVote.vote;
     reply.votes.pull(existingVote);
     reply.votes.push(newVote);
-  }
-  else if (vote != 0) {
+  } else if (vote != 0) {
     reply.voteCount += vote;
     reply.votes.push(newVote);
   }
@@ -98,9 +95,9 @@ module.exports.addVote = async (req, res) => {
       path: "votes",
       populate: [
         {
-          path: "user"
-        }
-      ]
+          path: "user",
+        },
+      ],
     });
   res.json(question);
-}
+};

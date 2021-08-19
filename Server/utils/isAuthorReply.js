@@ -1,7 +1,7 @@
 const User = require("../models/user");
 const Question = require("../models/question");
 const Answer = require("../models/answer");
-const Reply = require("../models/answer");
+const Reply = require("../models/replyAnswer");
 
 const isAuthorReply = async (req, res, next) => {
   const { id, answerId, replyId } = req.params;
