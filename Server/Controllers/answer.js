@@ -7,7 +7,27 @@ const Vote = require("../models/votes");
 module.exports.addAnswer = async (req, res) => {
   const { id } = req.params;
   const user = await User.findOne({ outlook_id: req.user.id });
-  const question = await Question.findById(id);
+  const question = await Question.findById(id)
+    .populate("author", "firstname")
+    .populate({
+      path: "answers",
+      populate: [
+        {
+          path: "replies",
+        },
+        {
+          path: "author",
+        },
+      ],
+    })
+    .populate({
+      path: "votes",
+      populate: [
+        {
+          path: "user"
+        }
+      ]
+    });
   const answer = new Answer(req.body);
   answer.author = user;
   answer.voteCount = 0;
@@ -16,7 +36,7 @@ module.exports.addAnswer = async (req, res) => {
   question.answers.push(answer);
   await answer.save();
   await question.save();
-  res.send("Answer added successfully");
+  res.json(question);
 };
 
 module.exports.deleteAnswer = async (req, res) => {

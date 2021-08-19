@@ -6,7 +6,7 @@ const Question = require("../models/question");
 const getDate = require("../utils/getDate");
 
 module.exports.addReply = async (req, res) => {
-  const { answerId } = req.params;
+  const { id, answerId } = req.params;
   const user = await User.findOne({ outlook_id: req.user.id });
   const answer = await Answer.findById(answerId);
   const reply = new Reply(req.body);
@@ -17,7 +17,29 @@ module.exports.addReply = async (req, res) => {
   answer.replies.push(reply);
   await reply.save();
   await answer.save();
-  res.send("Reply added successfully");
+  const question = await Question.findById(id)
+    .populate("author", "firstname")
+    .populate({
+      path: "answers",
+      populate: [
+        {
+          path: "replies",
+        },
+        {
+          path: "author",
+        },
+      ],
+    })
+    .populate({
+      path: "votes",
+      populate: [
+        {
+          path: "user"
+        }
+      ]
+    });
+  console.log(question);
+  res.json(question);
 };
 
 module.exports.deleteReply = async (req, res) => {

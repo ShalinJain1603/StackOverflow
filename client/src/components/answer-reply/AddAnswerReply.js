@@ -16,16 +16,16 @@ const AddAnswerReply = (props) => {
     } = useInput((reply) => reply.trim() !== "");
     const replySubmitHandler = async (event) => {
         event.preventDefault();
-        const data = {
+        const ans = {
             text: reply
         }
-        const res = await axios.post(`/api/question/${props.questionId}/answer/${props.answerId}/reply`, data);
-        console.log(res);
-        history.push(`/questions/${props.questionId}`)
+        const { data } = await axios.post(`/api/question/${props.questionId}/answer/${props.answerId}/reply`, ans);
+        replyReset();
+        props.setQuestion(data);
 
     }
     return <form onSubmit={replySubmitHandler}>
-        <textarea onChange={replyOnChange} onBlur={replyOnBlur}></textarea>
+        <textarea onChange={replyOnChange} onBlur={replyOnBlur} value={reply}></textarea>
         <button> Post</button>
     </form>
 }

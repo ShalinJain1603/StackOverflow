@@ -10,7 +10,7 @@ const Answer = (props) => {
     const answerDownVoteHandler = async (event) => {
         event.preventDefault();
         const { data } = await axios.post(`/api/question/${props.questionId}/answer/${props.answer._id}/addVote`, { vote: -1 });
-        props.setQuestion(data); console.log("answer upvoted!!!", data);
+        props.setQuestion(data);
     }
     return <div>
         <h1> {props.answer.author.firstname}</h1>
