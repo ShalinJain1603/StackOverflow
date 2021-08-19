@@ -23,8 +23,7 @@ const AnswerReply = (props) => {
       `/api/question/${props.questionId}/answer/${props.answerId}/reply/${props.reply._id}`,
       {}
     );
-    console.log(res);
-
+    console.log(res.data);
     const { data } = await axios.get(`/api/question/${props.questionId}`);
     props.setQuestion(data);
   };

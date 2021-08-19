@@ -42,6 +42,7 @@ module.exports.addQuestion = async (req, res) => {
   question.author = user;
   question.voteCount = 0;
   //console.log(getDate());
+  question.resolved = false;
   question.postedOn = new Date(24 - 7 - 2020);
   await question.save();
   res.send("Added new question");
@@ -80,9 +81,9 @@ module.exports.addVote = async (req, res) => {
       path: "votes",
       populate: [
         {
-          path: "user"
-        }
-      ]
+          path: "user",
+        },
+      ],
     });
   const userId = req.user.id;
   const user = await User.findOne({ outlook_id: userId });
@@ -107,4 +108,12 @@ module.exports.addVote = async (req, res) => {
   await question.save();
   console.log(question);
   res.json(question);
+};
+
+module.exports.resolveQuestion = async (req, res) => {
+  const { id } = req.params;
+  const question = await Question.findById(id);
+  question.resolved = !question.resolved;
+  await question.save();
+  res.send("Success");
 };

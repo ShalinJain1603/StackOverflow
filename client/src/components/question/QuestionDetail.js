@@ -70,6 +70,15 @@ const QuestionDetail = (props) => {
       console.log(res.data);
     }
   };
+
+  const ResolveHandler = async () => {
+    const res = await axios.post(`/api/question/${questionId}/resolve`);
+    console.log(res.data);
+    if (res.data === "Success") {
+      const { data } = await axios.get(`/api/question/${questionId}`);
+      setQuestion(data);
+    }
+  };
   return (
     <Fragment>
       {!question && (
@@ -87,11 +96,12 @@ const QuestionDetail = (props) => {
           {question.tags.map((tag) => (
             <Badge className="bg-warning mx-1 mb-1 text-dark">{tag}</Badge>
           ))}
+          {!question.resolved && <span className="btn btn-success">Open</span>}
+          {question.resolved && <span className="btn btn-danger">Closed</span>}
           <br />
           <button onClick={ReDirectHandler}>Edit</button>
-          <br />
-          <br />
           <button onClick={DeleteHandler}>Delete</button>
+          <button onClick={ResolveHandler}>Resolve</button>
           <br />
           {question.author.firstname}
           <p> {question.text}</p>
@@ -104,7 +114,7 @@ const QuestionDetail = (props) => {
           <button onClick={downVoteHandler}>Downvote </button>
         </div>
       )}
-      {question && (
+      {question && !question.resolved && (
         <AddAnswer questionId={questionId} setQuestion={setQuestion} />
       )}
       {
@@ -124,11 +134,13 @@ const QuestionDetail = (props) => {
               questionId={questionId}
               setQuestion={setQuestion}
             />
-            <AddAnswerReply
-              questionId={questionId}
-              answerId={answer._id}
-              setQuestion={setQuestion}
-            />
+            {!question.resolved && (
+              <AddAnswerReply
+                questionId={questionId}
+                answerId={answer._id}
+                setQuestion={setQuestion}
+              />
+            )}
             {question &&
               answer.replies.length &&
               answer.replies
