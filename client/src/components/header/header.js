@@ -37,7 +37,7 @@ const Header = (props) => {
     }, 50);
   }, []);
   return (
-    <div>
+    <div id="navbar_id">
       <Offcanvas
         show={show}
         onHide={handleClose}

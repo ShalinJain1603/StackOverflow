@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import { React, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import useInput from "../../hooks/use-input";
 import classes from "./RegisterUser.module.css";
@@ -76,6 +76,10 @@ const RegisterUserForm = (props) => {
     hostelIsValid &&
     departmentIsValid;
 
+  useEffect(() => {
+    const navbar = document.querySelector("#navbar_id");
+    navbar.setAttribute("hidden", true);
+  });
   return (
     <div className={classes.formShape}>
       <form onSubmit={formSubmitHandler} className={classes.form}>
