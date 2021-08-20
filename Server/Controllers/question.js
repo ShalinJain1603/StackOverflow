@@ -59,7 +59,7 @@ module.exports.editQuestion = async (req, res) => {
   const { id } = req.params;
   const question = await Question.findByIdAndUpdate(id, req.body);
   console.log(question);
-  res.send("Edited question");
+  res.send("Question edited");
 };
 
 module.exports.deleteQuestion = async (req, res) => {
