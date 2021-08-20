@@ -1,6 +1,6 @@
 module.exports.HOSTEL = [
   "Brahmaputra",
-  "Umium",
+  "Umiam",
   "Kameng",
   "Dihing",
   "Dhansiri",
