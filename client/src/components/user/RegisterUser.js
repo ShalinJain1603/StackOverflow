@@ -66,6 +66,8 @@ const RegisterUserForm = (props) => {
     };
     const res = await axios.post("/registerUser", data);
     console.log(res);
+    const navbar = document.querySelector("#navbar_id");
+    navbar.toggleAttribute("hidden");
     history.push("/");
   };
 
@@ -77,8 +79,11 @@ const RegisterUserForm = (props) => {
     departmentIsValid;
 
   useEffect(() => {
-    const navbar = document.querySelector("#navbar_id");
-    navbar.setAttribute("hidden", true);
+    const hideNav = () => {
+      const navbar = document.querySelector("#navbar_id");
+      navbar.setAttribute("hidden", true);
+    };
+    hideNav();
   });
   return (
     <div className={classes.formShape}>
