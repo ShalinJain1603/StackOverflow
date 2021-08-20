@@ -14,6 +14,7 @@ const QuestionDetail = (props) => {
   const [answerSortType, setAnswersSortType] = useState("Oldest");
   const [upvote, setUpvote] = useState("gray");
   const [downvote, setDownVote] = useState("gray");
+  const [showButtons, setShowButtons] = useState(false);
   const history = useHistory();
   useEffect(() => {
     const fetchQuestion = async () => {
@@ -22,10 +23,18 @@ const QuestionDetail = (props) => {
       const { data: checkVote } = await axios.get(
         `/api/question/${questionId}/checkVote`
       );
-      if (checkVote[0].vote === 1) {
-        setUpvote("green");
-      } else if (checkVote[0].vote === -1) {
-        setDownVote("red");
+      if (checkVote.length !== 0) {
+        if (checkVote[0].vote === 1) {
+          setUpvote("green");
+        } else if (checkVote[0].vote === -1) {
+          setDownVote("red");
+        }
+      }
+      const { data: isAuthorized } = await axios.get(
+        `/api/question/${questionId}/isAuthor`
+      );
+      if (isAuthorized === "Allowed") {
+        setShowButtons(true);
       }
     };
 
@@ -114,10 +123,15 @@ const QuestionDetail = (props) => {
           {!question.resolved && <span className="btn btn-success">Open</span>}
           {question.resolved && <span className="btn btn-danger">Closed</span>}
           <br />
-          <button onClick={ReDirectHandler}>Edit</button>
-          <button onClick={DeleteHandler}>Delete</button>
-          <button onClick={ResolveHandler}>Resolve</button>
-          <br />
+          {showButtons && (
+            <div>
+              <button onClick={ReDirectHandler}>Edit</button>
+              <button onClick={DeleteHandler}>Delete</button>
+              <button onClick={ResolveHandler}>Resolve</button>
+              <br />
+            </div>
+          )}
+
           {question.author.firstname}
           <p> {question.text}</p>
           <div className="text-align-center align-items-center d-flex flex-column w-25">
