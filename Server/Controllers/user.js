@@ -8,11 +8,12 @@ module.exports.userDetails = async (req, res) => {
 
 module.exports.editDetails = async (req, res) => {
   const user = await User.findOne({ outlook_id: req.user.id });
-  user.firstname = req.firstname;
-  user.lastname = req.lastname;
-  user.batch = req.batch;
-  user.hostel = req.hostel;
-  user.department = req.department;
+  console.log(req.body);
+  user.firstname = req.body.firstname;
+  user.lastname = req.body.lastname;
+  user.batch = req.body.batch;
+  user.hostel = req.body.hostel;
+  user.department = req.body.department;
   if (req.file) {
     if (user.image.filename) {
       cloudinary.uploader.destroy(user.image.filename);

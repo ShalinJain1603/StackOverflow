@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, {useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import useInput from "../../hooks/use-input";
 import classes from "./RegisterUser.module.css";
@@ -82,14 +82,15 @@ const EditUserForm = (props) => {
     formData.append("batch", batch);
     formData.append("hostel", hostel);
     formData.append("department", department);
+    console.log(formData);
     const res = await axios.post("/api/profile/edit", formData);
     console.log(res);
     history.push("/user");
   };
-  const imageChangeHandler = ({target}) => {
+  const imageChangeHandler = ({ target }) => {
     setImage(target.files[0]);
-  }
-  
+  };
+
   const formIsValid =
     firstnameIsValid &&
     lastnameIsValid &&
@@ -99,7 +100,11 @@ const EditUserForm = (props) => {
 
   return (
     <div className={classes.formShape}>
-      <form onSubmit={formSubmitHandler} className={classes.form} encType = "multipart/form-data">
+      <form
+        onSubmit={formSubmitHandler}
+        className={classes.form}
+        encType="multipart/form-data"
+      >
         <div className="form-group">
           <label className="form-label" htmlFor="firstname">
             First Name
@@ -202,10 +207,9 @@ const EditUserForm = (props) => {
             <option value="EP">EP</option>
           </select>
         </div>
-        <label htmlFor = "image">Profile Picture</label>
+        <label htmlFor="image">Profile Picture</label>
         <input type="file" id="image" onChange={imageChangeHandler} />
         {formIsValid && <button className="btn btn-success mt-3">Edit</button>}
-
       </form>
     </div>
   );
