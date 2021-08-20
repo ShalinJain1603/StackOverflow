@@ -4,14 +4,16 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import { Badge } from "reactstrap";
 import AddAnswerReply from "../answer-reply/AddAnswerReply";
+import AllAnswerReplies from "../answer-reply/AllAnswerReplies";
 import AnswerReply from "../answer-reply/AnswerReply";
 import AddAnswer from "../answer/AddAnswer";
 import Answer from "../answer/Answer";
 import Modal from "../UI/Modal";
 
 const QuestionDetail = (props) => {
-  const [question, setQuestion] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [showModalFlash, setShowModalFlash] = useState(false);
+  const [question, setQuestion] = useState(null);
   const { questionId } = useParams();
   const [answerSortType, setAnswersSortType] = useState("Oldest");
   const [upvote, setUpvote] = useState("gray");
@@ -98,11 +100,8 @@ const QuestionDetail = (props) => {
 
   const DeleteHandler = async () => {
     const res = await axios.post(`/api/question/${questionId}/delete`);
-    if (res.data === "Deleted Question") {
-      history.push("/questions");
-    } else {
-      console.log(res.data);
-    }
+    setShowModal(false);
+    setShowModalFlash(true);
   };
 
   const promptMessage = (
@@ -112,6 +111,19 @@ const QuestionDetail = (props) => {
       <button onClick={closeModal}> No </button>
     </div>
   );
+
+  const closeModalFlash = () => {
+    setShowModalFlash(false);
+    history.push("/questions");
+  };
+
+  const successMessage = (
+    <div>
+      <h2> Question Deleted :(</h2>
+      <button onClick={closeModalFlash}> Close</button>
+    </div>
+  );
+
   const ResolveHandler = async () => {
     const res = await axios.post(`/api/question/${questionId}/resolve`);
     console.log(res.data);
@@ -120,9 +132,13 @@ const QuestionDetail = (props) => {
       setQuestion(data);
     }
   };
+
   return (
     <Fragment>
       {showModal && <Modal>{promptMessage}</Modal>}
+      {showModalFlash && (
+        <Modal onClick={closeModalFlash}>{successMessage}</Modal>
+      )}
       {!question && (
         <p className="m-3">
           <div class="d-flex justify-content-center">
@@ -224,11 +240,9 @@ const QuestionDetail = (props) => {
                 setQuestion={setQuestion}
               />
             )}
-            {question &&
-              answer.replies.length &&
-              answer.replies
-                .sort(answerSorting())
-                .map((reply) => (
+            {question && answer.replies.length && (
+              <AllAnswerReplies>
+                {answer.replies.sort(answerSorting()).map((reply) => (
                   <AnswerReply
                     reply={reply}
                     questionId={questionId}
@@ -236,6 +250,8 @@ const QuestionDetail = (props) => {
                     setQuestion={setQuestion}
                   />
                 ))}
+              </AllAnswerReplies>
+            )}
           </div>
         ))}
     </Fragment>
