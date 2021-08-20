@@ -7,9 +7,11 @@ import AddAnswerReply from "../answer-reply/AddAnswerReply";
 import AnswerReply from "../answer-reply/AnswerReply";
 import AddAnswer from "../answer/AddAnswer";
 import Answer from "../answer/Answer";
+import Modal from "../UI/Modal";
 
 const QuestionDetail = (props) => {
   const [question, setQuestion] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const { questionId } = useParams();
   const [answerSortType, setAnswersSortType] = useState("Oldest");
   const [upvote, setUpvote] = useState("gray");
@@ -86,6 +88,14 @@ const QuestionDetail = (props) => {
     history.push(`/questions/${questionId}/edit`);
   };
 
+  const DeleteModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
   const DeleteHandler = async () => {
     const res = await axios.post(`/api/question/${questionId}/delete`);
     if (res.data === "Deleted Question") {
@@ -95,6 +105,13 @@ const QuestionDetail = (props) => {
     }
   };
 
+  const promptMessage = (
+    <div>
+      <h2> Are you sure you want to delete ?</h2>
+      <button onClick={DeleteHandler}> Yes </button>
+      <button onClick={closeModal}> No </button>
+    </div>
+  );
   const ResolveHandler = async () => {
     const res = await axios.post(`/api/question/${questionId}/resolve`);
     console.log(res.data);
@@ -105,6 +122,7 @@ const QuestionDetail = (props) => {
   };
   return (
     <Fragment>
+      {showModal && <Modal>{promptMessage}</Modal>}
       {!question && (
         <p className="m-3">
           <div class="d-flex justify-content-center">
@@ -126,7 +144,7 @@ const QuestionDetail = (props) => {
           {showButtons && (
             <div>
               <button onClick={ReDirectHandler}>Edit</button>
-              <button onClick={DeleteHandler}>Delete</button>
+              <button onClick={DeleteModal}>Delete</button>
               <button onClick={ResolveHandler}>Resolve</button>
               <br />
             </div>
