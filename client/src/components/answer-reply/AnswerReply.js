@@ -1,13 +1,29 @@
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 const AnswerReply = (props) => {
+  const [showButton, setShowButton] = useState(false);
+
+  useEffect(() => {
+    const isAuthor = async () => {
+      const { data: isAuthorized } = await axios.get(
+        `/api/question/${props.questionId}/answer/${props.answerId}/reply/${props.reply._id}/isValid`
+      );
+      if (isAuthorized === "Allowed") {
+        setShowButton(true);
+      }
+    };
+    isAuthor();
+  }, []);
   const replyUpVoteHandler = async (event) => {
     event.preventDefault();
     const { data } = await axios.post(
       `/api/question/${props.questionId}/answer/${props.answerId}/reply/${props.reply._id}/addVote`,
       { vote: 1 }
     );
-    props.setQuestion(data);
+    if (data !== "You must login first") {
+      props.setQuestion(data);
+    }
   };
   const replyDownVoteHandler = async (event) => {
     event.preventDefault();
@@ -15,7 +31,9 @@ const AnswerReply = (props) => {
       `/api/question/${props.questionId}/answer/${props.answerId}/reply/${props.reply._id}/addVote`,
       { vote: -1 }
     );
-    props.setQuestion(data);
+    if (data !== "You must login first") {
+      props.setQuestion(data);
+    }
   };
 
   const deleteHandler = async () => {
@@ -25,7 +43,9 @@ const AnswerReply = (props) => {
     );
     console.log(res.data);
     const { data } = await axios.get(`/api/question/${props.questionId}`);
-    props.setQuestion(data);
+    if (data !== "You must login first") {
+      props.setQuestion(data);
+    }
   };
   return (
     <div>
@@ -73,7 +93,7 @@ const AnswerReply = (props) => {
           </span>
         </OverlayTrigger>
       </div>
-      <button onClick={deleteHandler}> Delete</button>
+      {showButton && <button onClick={deleteHandler}> Delete</button>}
     </div>
   );
 };

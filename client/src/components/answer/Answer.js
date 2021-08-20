@@ -1,15 +1,32 @@
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 const Answer = (props) => {
   const history = useHistory();
+  const [showButton, setShowButton] = useState(false);
+
+  useEffect(() => {
+    const isAuthor = async () => {
+      const { data: isAuthorized } = await axios.get(
+        `/api/question/${props.questionId}/answer/${props.answer._id}/isValid`
+      );
+      if (isAuthorized === "Allowed") {
+        setShowButton(true);
+      }
+    };
+    isAuthor();
+  }, []);
+
   const answerUpVoteHandler = async (event) => {
     event.preventDefault();
     const { data } = await axios.post(
       `/api/question/${props.questionId}/answer/${props.answer._id}/addVote`,
       { vote: 1 }
     );
-    props.setQuestion(data);
+    if (data !== "You must login first") {
+      props.setQuestion(data);
+    }
   };
   const answerDownVoteHandler = async (event) => {
     event.preventDefault();
@@ -17,7 +34,9 @@ const Answer = (props) => {
       `/api/question/${props.questionId}/answer/${props.answer._id}/addVote`,
       { vote: -1 }
     );
-    props.setQuestion(data);
+    if (data !== "You must login first") {
+      props.setQuestion(data);
+    }
   };
   const DeleteHandler = async () => {
     const res = await axios.post(
@@ -26,7 +45,9 @@ const Answer = (props) => {
     );
     console.log(res.data);
     const { data } = await axios.get(`/api/question/${props.questionId}`);
-    props.setQuestion(data);
+    if (data !== "You must login first") {
+      props.setQuestion(data);
+    }
   };
   return (
     <div>
@@ -75,7 +96,7 @@ const Answer = (props) => {
           </span>
         </OverlayTrigger>
       </div>
-      <button onClick={DeleteHandler}>Delete</button>
+      {showButton && <button onClick={DeleteHandler}>Delete</button>}
     </div>
   );
 };

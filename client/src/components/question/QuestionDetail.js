@@ -50,18 +50,22 @@ const QuestionDetail = (props) => {
     const { data } = await axios.post(`/api/question/${questionId}/vote`, {
       vote: 1,
     });
-    setDownVote("gray");
-    setUpvote("green");
-    setQuestion(data);
+    if (data !== "You must login first") {
+      setDownVote("gray");
+      setUpvote("green");
+      setQuestion(data);
+    }
   };
   const downVoteHandler = async (event) => {
     event.preventDefault();
     const { data } = await axios.post(`/api/question/${questionId}/vote`, {
       vote: -1,
     });
-    setDownVote("red");
-    setUpvote("gray");
-    setQuestion(data);
+    if (data !== "You must login first") {
+      setDownVote("red");
+      setUpvote("gray");
+      setQuestion(data);
+    }
   };
 
   const sortByNewest = () => {

@@ -21,4 +21,12 @@ router.post(
   addVote
 );
 
+router.get(
+  "/:id/answer/:answerId/reply/:replyId/isValid",
+  isLoggedIn,
+  isAuthorReply,
+  (req, res) => {
+    res.send("Allowed");
+  }
+);
 module.exports = router;
