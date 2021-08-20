@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Fragment, useEffect, useState } from "react";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import { Badge } from "reactstrap";
 import AddAnswerReply from "../answer-reply/AddAnswerReply";
@@ -11,6 +12,8 @@ const QuestionDetail = (props) => {
   const [question, setQuestion] = useState(null);
   const { questionId } = useParams();
   const [answerSortType, setAnswersSortType] = useState("Oldest");
+  const [upvote, setUpvote] = useState("gray");
+  const [downvote, setDownVote] = useState("gray");
   const history = useHistory();
   useEffect(() => {
     const fetchQuestion = async () => {
@@ -26,6 +29,8 @@ const QuestionDetail = (props) => {
     const { data } = await axios.post(`/api/question/${questionId}/vote`, {
       vote: 1,
     });
+    setDownVote("gray");
+    setUpvote("green");
     setQuestion(data);
   };
   const downVoteHandler = async (event) => {
@@ -33,6 +38,8 @@ const QuestionDetail = (props) => {
     const { data } = await axios.post(`/api/question/${questionId}/vote`, {
       vote: -1,
     });
+    setDownVote("red");
+    setUpvote("gray");
     setQuestion(data);
   };
 
@@ -105,13 +112,49 @@ const QuestionDetail = (props) => {
           <br />
           {question.author.firstname}
           <p> {question.text}</p>
-          <h2>
-            {" "}
-            {question.voteCount} Vote
-            {Math.abs(question.voteCount) === 1 ? "" : "s"}
-          </h2>
-          <button onClick={upVoteHandler}>Upvote </button>
-          <button onClick={downVoteHandler}>Downvote </button>
+          <div className="text-align-center align-items-center d-flex flex-column w-25">
+            <OverlayTrigger
+              key="top"
+              placement="top"
+              overlay={<Tooltip id={`tooltip-top`}>Upvote</Tooltip>}
+            >
+              <span onClick={upVoteHandler} className="ms-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="40"
+                  height="40"
+                  fill={upvote}
+                  class="bi bi-caret-up-square-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4 9h8a.5.5 0 0 0 .374-.832l-4-4.5a.5.5 0 0 0-.748 0l-4 4.5A.5.5 0 0 0 4 11z" />
+                </svg>
+              </span>
+            </OverlayTrigger>
+            <h2>
+              {" "}
+              {question.voteCount} Vote
+              {Math.abs(question.voteCount) === 1 ? "" : "s"}
+            </h2>
+            <OverlayTrigger
+              key="bottom"
+              placement="bottom"
+              overlay={<Tooltip id={`tooltip-bottom`}>Downvote</Tooltip>}
+            >
+              <span onClick={downVoteHandler} className="ms-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="40"
+                  height="40"
+                  fill={downvote}
+                  class="bi bi-caret-down-square-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4 4a.5.5 0 0 0-.374.832l4 4.5a.5.5 0 0 0 .748 0l4-4.5A.5.5 0 0 0 12 6H4z" />
+                </svg>
+              </span>
+            </OverlayTrigger>
+          </div>
         </div>
       )}
       {question && !question.resolved && (
