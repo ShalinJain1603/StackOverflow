@@ -4,6 +4,7 @@ const User = require("../models/user");
 const Vote = require("../models/votes");
 const Question = require("../models/question");
 const getDate = require("../utils/getDate");
+const { get } = require("mongoose");
 
 module.exports.addReply = async (req, res) => {
   const { id, answerId } = req.params;
@@ -13,7 +14,7 @@ module.exports.addReply = async (req, res) => {
   reply.author = user;
   reply.voteCount = 0;
   //const date = `${getDate()}`;
-  reply.postedOn = new Date(15 - 05 - 2021);
+  reply.postedOn = new Date(getDate());
   answer.replies.push(reply);
   await reply.save();
   await answer.save();

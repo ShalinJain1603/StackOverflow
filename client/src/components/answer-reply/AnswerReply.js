@@ -1,13 +1,32 @@
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import Modal from "../UI/Modal";
 const AnswerReply = (props) => {
+  const [showButton, setShowButton] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  useEffect(() => {
+    const isAuthor = async () => {
+      const { data: isAuthorized } = await axios.get(
+        `/api/question/${props.questionId}/answer/${props.answerId}/reply/${props.reply._id}/isValid`
+      );
+      if (isAuthorized === "Allowed") {
+        setShowButton(true);
+      }
+    };
+    isAuthor();
+  }, []);
   const replyUpVoteHandler = async (event) => {
     event.preventDefault();
     const { data } = await axios.post(
       `/api/question/${props.questionId}/answer/${props.answerId}/reply/${props.reply._id}/addVote`,
       { vote: 1 }
     );
-    props.setQuestion(data);
+    if (data !== "You must login first") {
+      props.setQuestion(data);
+    } else {
+      setShowLoginModal(true);
+    }
   };
   const replyDownVoteHandler = async (event) => {
     event.preventDefault();
@@ -15,7 +34,11 @@ const AnswerReply = (props) => {
       `/api/question/${props.questionId}/answer/${props.answerId}/reply/${props.reply._id}/addVote`,
       { vote: -1 }
     );
-    props.setQuestion(data);
+    if (data !== "You must login first") {
+      props.setQuestion(data);
+    } else {
+      setShowLoginModal(true);
+    }
   };
 
   const deleteHandler = async () => {
@@ -25,10 +48,37 @@ const AnswerReply = (props) => {
     );
     console.log(res.data);
     const { data } = await axios.get(`/api/question/${props.questionId}`);
-    props.setQuestion(data);
+    if (data !== "You must login first") {
+      props.setQuestion(data);
+    }
   };
+  const closeModalLogin = () => {
+    setShowLoginModal(false);
+  };
+
+  const loginPrompt = (
+    <div>
+      <h2>
+        You must login first!!
+        <button
+          onClick={closeModalLogin}
+          className="btn btn-sm btn-danger ms-5"
+        >
+          Close
+        </button>
+      </h2>
+
+      <a
+        className="btn btn-info me-auto"
+        href="http://localhost:4000/auth/outlook"
+      >
+        Login with outlook
+      </a>
+    </div>
+  );
   return (
     <div>
+      {showLoginModal && <Modal>{loginPrompt}</Modal>}
       <p> {props.reply.text}</p>
       <div className="text-align-center align-items-center d-flex flex-column w-25">
         <OverlayTrigger
@@ -73,7 +123,7 @@ const AnswerReply = (props) => {
           </span>
         </OverlayTrigger>
       </div>
-      <button onClick={deleteHandler}> Delete</button>
+      {showButton && <button onClick={deleteHandler}> Delete</button>}
     </div>
   );
 };

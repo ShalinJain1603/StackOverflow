@@ -13,6 +13,7 @@ import Modal from "../UI/Modal";
 const QuestionDetail = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [showModalFlash, setShowModalFlash] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
   const [question, setQuestion] = useState(null);
   const { questionId } = useParams();
   const [answerSortType, setAnswersSortType] = useState("Oldest");
@@ -50,18 +51,26 @@ const QuestionDetail = (props) => {
     const { data } = await axios.post(`/api/question/${questionId}/vote`, {
       vote: 1,
     });
-    setDownVote("gray");
-    setUpvote("green");
-    setQuestion(data);
+    if (data !== "You must login first") {
+      setDownVote("gray");
+      setUpvote("green");
+      setQuestion(data);
+    } else {
+      setShowLoginModal(true);
+    }
   };
   const downVoteHandler = async (event) => {
     event.preventDefault();
     const { data } = await axios.post(`/api/question/${questionId}/vote`, {
       vote: -1,
     });
-    setDownVote("red");
-    setUpvote("gray");
-    setQuestion(data);
+    if (data !== "You must login first") {
+      setDownVote("red");
+      setUpvote("gray");
+      setQuestion(data);
+    } else {
+      setShowLoginModal(true);
+    }
   };
 
   const sortByNewest = () => {
@@ -124,6 +133,31 @@ const QuestionDetail = (props) => {
     </div>
   );
 
+  const closeModalLogin = () => {
+    setShowLoginModal(false);
+  };
+
+  const loginPrompt = (
+    <div>
+      <h2>
+        You must login first!!
+        <button
+          onClick={closeModalLogin}
+          className="btn btn-sm btn-danger ms-5"
+        >
+          Close
+        </button>
+      </h2>
+
+      <a
+        className="btn btn-info me-auto"
+        href="http://localhost:4000/auth/outlook"
+      >
+        Login with outlook
+      </a>
+    </div>
+  );
+
   const ResolveHandler = async () => {
     const res = await axios.post(`/api/question/${questionId}/resolve`);
     console.log(res.data);
@@ -139,6 +173,7 @@ const QuestionDetail = (props) => {
       {showModalFlash && (
         <Modal onClick={closeModalFlash}>{successMessage}</Modal>
       )}
+      {showLoginModal && <Modal>{loginPrompt}</Modal>}
       {!question && (
         <p className="m-3">
           <div class="d-flex justify-content-center">
