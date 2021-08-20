@@ -1,10 +1,12 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import useInput from "../../hooks/use-input";
 import classes from "./RegisterUser.module.css";
 const EditUserForm = (props) => {
   const history = useHistory();
+  const formData = new FormData();
+  const [image, setImage] = useState(null);
   const {
     value: firstname,
     isTouched: firstnameIsTouched,
@@ -74,16 +76,19 @@ const EditUserForm = (props) => {
 
   const formSubmitHandler = async (event) => {
     event.preventDefault();
-    const data = {
-      firstname,
-      lastname,
-      batch,
-      hostel,
-      department,
-    };
-    const res = await axios.post("/api/profile/edit", data);
+    formData.append("image", image);
+    formData.append("firstname", firstname);
+    formData.append("lastname", lastname);
+    formData.append("batch", batch);
+    formData.append("hostel", hostel);
+    formData.append("department", department);
+    console.log(formData);
+    const res = await axios.post("/api/profile/edit", formData);
     console.log(res);
     history.push("/user");
+  };
+  const imageChangeHandler = ({ target }) => {
+    setImage(target.files[0]);
   };
 
   const formIsValid =
@@ -95,7 +100,11 @@ const EditUserForm = (props) => {
 
   return (
     <div className={classes.formShape}>
-      <form onSubmit={formSubmitHandler} className={classes.form}>
+      <form
+        onSubmit={formSubmitHandler}
+        className={classes.form}
+        encType="multipart/form-data"
+      >
         <div className="form-group">
           <label className="form-label" htmlFor="firstname">
             First Name
@@ -198,6 +207,8 @@ const EditUserForm = (props) => {
             <option value="EP">EP</option>
           </select>
         </div>
+        <label htmlFor="image">Profile Picture</label>
+        <input type="file" id="image" onChange={imageChangeHandler} />
         {formIsValid && <button className="btn btn-success mt-3">Edit</button>}
       </form>
     </div>

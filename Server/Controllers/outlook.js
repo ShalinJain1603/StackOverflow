@@ -27,7 +27,7 @@ module.exports.registerUser = async (req, res) => {
     user.email = req.user.emails[0].value;
     user.username = req.user.displayName;
     const head = req.user.displayName[0];
-    user.image = LETTERHEADS[head];
+    user.image.url = LETTERHEADS[head];
     await user.save();
     console.log(user);
     res.send("User registered");

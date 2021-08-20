@@ -25,7 +25,8 @@ const userSchema = new mongoose.Schema({
     enum: [2018, 2019, 2020, 2021, 2022, 2023, 2024],
   },
   image: {
-    type: String,
+    url: String,
+    filename: String
   },
   email: {
     type: String,

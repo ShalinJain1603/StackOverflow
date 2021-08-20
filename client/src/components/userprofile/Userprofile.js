@@ -33,7 +33,7 @@ const UserProfile = (props) => {
         <div className="container m-3">
           <div className="row">
             <div className="col-md-4 align-items-center d-flex flex-column mt-5">
-              <img src={user.image} className={classes.letterhead} />
+              <img src={user?.image?.url} className={classes.letterhead} />
               <h2>
                 {user.firstname} {user.lastname}
               </h2>
