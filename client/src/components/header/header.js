@@ -76,7 +76,9 @@ const Header = (props) => {
           <span onClick={handleShow} className={classes.sidebarToggle}>
             <i class="fa fa-align-justify fa-lg text-light"></i>
           </span>
-          <NavbarBrand href="/">StackOverflow</NavbarBrand>
+          <NavbarBrand href="/">
+            <img src="/Images/Logo/Logo.png" className={classes.logo} />
+          </NavbarBrand>
           <Collapse isOpen={isNavOpen} navbar>
             <Nav navbar className="me-auto">
               <NavItem>

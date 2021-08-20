@@ -6,8 +6,15 @@ const Vote = require("../models/votes");
 const getDate = require("../utils/getDate");
 
 module.exports.showAllQuestions = async (req, res) => {
-  const questions = await Question.find({}).populate("author");
-  res.json(questions);
+  const { user } = req.query;
+  console.log(user);
+  if (user) {
+    const questions = await Question.find({ author: user }).populate("author");
+    res.json(questions);
+  } else {
+    const questions = await Question.find({}).populate("author");
+    res.json(questions);
+  }
 };
 
 module.exports.showOneQuestion = async (req, res) => {
