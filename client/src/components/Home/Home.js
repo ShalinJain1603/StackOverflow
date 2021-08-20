@@ -7,26 +7,46 @@ import classes from "./Home.module.css";
 
 const Home = () => {
     const [popularQuestions, setPopularQuestions] = useState(null);
-    // const [hostelQuestions, setHostelQuestions] = useState(null);
+    const [hostelQuestions, setHostelQuestions] = useState(null);
+    const [departmentQuestions, setDepartmentQuestions] = useState(null);
+    const [hostel, setHostel] = useState(null);
+    const [department, setDepartment] = useState(null);
     useEffect(() => {
         const fetchPopularQuestions = async () => {
             console.log("home");
             const { data } = await axios.get("/api/question/popular");
-            //console.log(data);
             setPopularQuestions(data);
         }
         fetchPopularQuestions();
     }, [])
 
-    // useEffect(() => {
-    //     const fetchHostelQuestions = async () => {
-    //         console.log("home");
-    //         const { data } = await axios.get("/api/question/hostel");
-    //         console.log(data);
-    //         setHostelQuestions(data);
-    //     }
-    //     fetchHostelQuestions();
-    // }, [])
+    useEffect(() => {
+        const fetchHostelQuestions = async () => {
+            const { data } = await axios.get("/api/question/hostel");
+            setHostel(data.hostel);
+            if (data.questions?.length > 0) {
+                setHostelQuestions(data.questions);
+            } else {
+                setHostelQuestions(null);
+            }
+
+        }
+        fetchHostelQuestions();
+    }, [])
+
+    useEffect(() => {
+        const fetchDepartmentQuestions = async () => {
+            const { data } = await axios.get("/api/question/department");
+            setDepartment(data.department);
+            if (data.questions?.length > 0) {
+                setDepartmentQuestions(data.questions);
+            } else {
+                setDepartmentQuestions(null);
+            }
+
+        }
+        fetchDepartmentQuestions();
+    }, [])
     return <Fragment>
         <div>
             {popularQuestions && <h1>Popular Questions</h1>}
@@ -56,6 +76,77 @@ const Home = () => {
                                         <p> Votes : {popularQuestion.voteCount}</p>
                                         <h5>{popularQuestion.text}</h5>
                                         <p> {popularQuestion.answers.length} Replies</p>
+                                    </CardBody>
+                                </Card>
+                            </div>
+                        </Link>
+                    </OverlayTrigger>
+                ))}
+        </div>
+        <div>
+            {hostelQuestions && <h1> Top Questions for {hostel} hostel</h1>}
+            {hostelQuestions &&
+                hostelQuestions.map((hostelQuestion) => (
+                    <OverlayTrigger
+                        key="top"
+                        placement="top"
+                        overlay={
+                            <Tooltip id={`tooltip-top`}>Click to get Details</Tooltip>
+                        }
+                    >
+                        <Link
+                            to={`/questions/${hostelQuestion._id}`}
+                            className={classes.getDetails}
+                        >
+                            <div className="my-3">
+                                <Card>
+                                    <CardBody>
+                                        <CardTitle>
+                                            <h5> {hostelQuestion.title}</h5>
+                                        </CardTitle>
+                                        <p className="text-muted">
+                                            {" "}
+                        Posted by: {hostelQuestion.author.username}
+                                        </p>
+                                        <p> Votes : {hostelQuestion.voteCount}</p>
+                                        <h5>{hostelQuestion.text}</h5>
+                                        <p> {hostelQuestion.answers.length} Replies</p>
+                                    </CardBody>
+                                </Card>
+                            </div>
+                        </Link>
+                    </OverlayTrigger>
+                ))}
+        </div>
+
+        <div>
+            {departmentQuestions && <h1> Top Questions for {department} department</h1>}
+            {departmentQuestions &&
+                departmentQuestions.map((departmentQuestion) => (
+                    <OverlayTrigger
+                        key="top"
+                        placement="top"
+                        overlay={
+                            <Tooltip id={`tooltip-top`}>Click to get Details</Tooltip>
+                        }
+                    >
+                        <Link
+                            to={`/questions/${departmentQuestion._id}`}
+                            className={classes.getDetails}
+                        >
+                            <div className="my-3">
+                                <Card>
+                                    <CardBody>
+                                        <CardTitle>
+                                            <h5> {departmentQuestion.title}</h5>
+                                        </CardTitle>
+                                        <p className="text-muted">
+                                            {" "}
+                        Posted by: {departmentQuestion.author.username}
+                                        </p>
+                                        <p> Votes : {departmentQuestion.voteCount}</p>
+                                        <h5>{departmentQuestion.text}</h5>
+                                        <p> {departmentQuestion.answers.length} Replies</p>
                                     </CardBody>
                                 </Card>
                             </div>
