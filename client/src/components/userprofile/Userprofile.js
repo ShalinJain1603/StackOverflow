@@ -9,7 +9,6 @@ const UserProfile = (props) => {
     console.log("User");
     const getUser = async () => {
       const { data } = await axios.get("/api/profile");
-      console.log(data);
       setUser(data);
     };
     getUser();
@@ -26,7 +25,7 @@ const UserProfile = (props) => {
         <div>
           <button onClick={ReDirectHandler}>Edit</button>
           <br />
-          <img src={user.image} className={classes.letterhead} />
+          <img src={user?.image?.url} className={classes.letterhead} />
           <h2>
             {user.firstname} {user.lastname}
           </h2>

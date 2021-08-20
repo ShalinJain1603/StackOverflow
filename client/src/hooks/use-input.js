@@ -4,7 +4,9 @@ const useInput = (validateValue, initialValue = "") => {
   const [value, setValue] = useState(initialValue);
   const [isTouched, setIsTouched] = useState(false);
 
-  const valueIsValid = validateValue(value);
+  var valueIsValid = false;
+  if (!value) valueIsValid = false;
+  else valueIsValid = validateValue(value);
   const hasError = !valueIsValid && isTouched;
 
   const onBlur = () => {
