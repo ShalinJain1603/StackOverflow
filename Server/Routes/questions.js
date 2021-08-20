@@ -13,9 +13,12 @@ const {
   addVote,
   resolveQuestion,
   checkVote,
+  popularQuestions
 } = require("../Controllers/question");
 
 router.get("/", showAllQuestions);
+//router.get("/hostel", hostelQuestions);
+router.get("/popular", popularQuestions);
 router.post("/new", isLoggedIn, addQuestion);
 router.post("/tags", showByTags);
 router.get("/:id", showOneQuestion);

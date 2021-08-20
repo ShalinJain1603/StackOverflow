@@ -14,7 +14,7 @@ const AllQuestions = () => {
     console.log("AllQuestions");
     const allQuestions = async () => {
       const { data } = await axios.get("/api/question");
-      console.log(data);
+      //console.log(data);
       setQuestions(data);
       setSafeQuestions(data);
     };

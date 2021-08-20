@@ -9,6 +9,7 @@ import AllQuestionsByTag from "./components/Tags/AllQuestionsByTags";
 import EditUserForm from "./components/user/EditUser";
 import RegisterUserForm from "./components/user/RegisterUser";
 import UserProfile from "./components/userprofile/Userprofile";
+import Home from "./components/Home/Home";
 
 const Router = (props) => (
   <Switch>
@@ -22,6 +23,7 @@ const Router = (props) => (
     <Route exact path="/questions" component={AllQuestions} />
     <Route exact path="/register" component={RegisterUserForm} />
     <Route exact path="/tags" component={AllQuestionsByTag} />
+    <Route exact path="/" component={Home} />
     <PrivateRoute exact path="/user" component={UserProfile} />
     <PrivateRoute exact path="/user/edit" component={EditUserForm} />
   </Switch>

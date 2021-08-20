@@ -43,6 +43,15 @@ module.exports.showByTags = async (req, res) => {
   res.json(questions);
 };
 
+module.exports.popularQuestions = async (req, res) => {
+  var questions = await Question.find({}).populate("author");
+  questions = questions.sort((a, b) => {
+    return b.voteCount - a.voteCount;
+  }).slice(0, 3);
+  console.log(questions);
+  res.json(questions);
+}
+
 module.exports.addQuestion = async (req, res) => {
   const user = await User.findOne({ outlook_id: req.user.id });
   const question = new Question(req.body);
@@ -133,3 +142,25 @@ module.exports.checkVote = async (req, res) => {
   const foundUser = question.votes.filter((ques) => ques.user.equals(user._id));
   res.json(foundUser);
 };
+
+// module.exports.hostelQuestions = async (req, res) => {
+//   var userId = req?.user?._id;
+//   if (!userId) {
+//     res.send("You must login first!!!");
+//   }
+//   const user = await User.findOne({ outlook_id: req?.user?.id });
+//   if (!user) {
+//     res.send("af");
+//   }
+//   var hostel = user.hostel;
+//   if (!hostel) {
+//     res.send("F");
+//   }
+//   var questions = await Question.find({
+//     tags: { $elemMatch: hostel },
+//   }).sort((a, b) => {
+//     return b.voteCount - a.voteCount;
+//   }).slice(0, 3);
+//   res.json(questions);
+
+// }
