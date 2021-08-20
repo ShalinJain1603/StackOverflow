@@ -124,3 +124,12 @@ module.exports.resolveQuestion = async (req, res) => {
   await question.save();
   res.send("Success");
 };
+
+module.exports.checkVote = async (req, res) => {
+  const { id } = req.params;
+  const userId = req.user.id;
+  const user = await User.findOne({ outlook_id: userId });
+  const question = await Question.findById(id).populate("votes");
+  const foundUser = question.votes.filter((ques) => ques.user.equals(user._id));
+  res.json(foundUser);
+};

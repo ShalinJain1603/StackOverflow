@@ -19,6 +19,14 @@ const QuestionDetail = (props) => {
     const fetchQuestion = async () => {
       const { data } = await axios.get(`/api/question/${questionId}`);
       setQuestion(data);
+      const { data: checkVote } = await axios.get(
+        `/api/question/${questionId}/checkVote`
+      );
+      if (checkVote[0].vote === 1) {
+        setUpvote("green");
+      } else if (checkVote[0].vote === -1) {
+        setDownVote("red");
+      }
     };
 
     fetchQuestion();

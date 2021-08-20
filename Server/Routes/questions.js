@@ -12,6 +12,7 @@ const {
   showByTags,
   addVote,
   resolveQuestion,
+  checkVote,
 } = require("../Controllers/question");
 
 router.get("/", showAllQuestions);
@@ -22,4 +23,5 @@ router.post("/:id/edit", isLoggedIn, isAuthor, editQuestion);
 router.post("/:id/delete", isLoggedIn, isAuthor, deleteQuestion);
 router.post("/:id/vote", isLoggedIn, addVote);
 router.post("/:id/resolve", isLoggedIn, isAuthor, resolveQuestion);
+router.get("/:id/checkVote", isLoggedIn, checkVote);
 module.exports = router;
