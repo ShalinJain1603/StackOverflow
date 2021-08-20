@@ -4,10 +4,13 @@ import { useHistory, useParams } from "react-router-dom";
 import { Badge } from "reactstrap";
 import AddAnswerReply from "../answer-reply/AddAnswerReply";
 import AnswerReply from "../answer-reply/AnswerReply";
+import AllAnswerReplies from "../answer-reply/AllAnswerReplies";
 import AddAnswer from "../answer/AddAnswer";
 import Answer from "../answer/Answer";
+import Modal from "../UI/Modal";
 
 const QuestionDetail = (props) => {
+  const [showModal, setShowModal] = useState(false);
   const [question, setQuestion] = useState(null);
   const { questionId } = useParams();
   const [answerSortType, setAnswersSortType] = useState("Oldest");
@@ -65,7 +68,7 @@ const QuestionDetail = (props) => {
   const DeleteHandler = async () => {
     const res = await axios.post(`/api/question/${questionId}/delete`);
     if (res.data === "Deleted Question") {
-      history.push("/questions");
+      setShowModal(true);
     } else {
       console.log(res.data);
     }
@@ -79,8 +82,22 @@ const QuestionDetail = (props) => {
       setQuestion(data);
     }
   };
+
+  const closeModal = () => {
+    setShowModal(false);
+    history.push("/questions");
+  };
+
+  const successMessage = (
+    <div>
+      <h2> Question Deleted </h2>
+      <button onClick={closeModal}> Close</button>
+    </div>
+  );
+
   return (
     <Fragment>
+      {showModal && <Modal onClick={closeModal}>{successMessage}</Modal>}
       {!question && (
         <p className="m-3">
           <div class="d-flex justify-content-center">
@@ -141,18 +158,21 @@ const QuestionDetail = (props) => {
                 setQuestion={setQuestion}
               />
             )}
-            {question &&
-              answer.replies.length &&
-              answer.replies
-                .sort(answerSorting())
-                .map((reply) => (
-                  <AnswerReply
-                    reply={reply}
-                    questionId={questionId}
-                    answerId={answer._id}
-                    setQuestion={setQuestion}
-                  />
-                ))}
+            <AllAnswerReplies >
+
+              {question &&
+                answer.replies.length &&
+                answer.replies
+                  .sort(answerSorting())
+                  .map((reply) => (
+                    <AnswerReply
+                      reply={reply}
+                      questionId={questionId}
+                      answerId={answer._id}
+                      setQuestion={setQuestion}
+                    />
+                  ))}
+            </AllAnswerReplies>
           </div>
         ))}
     </Fragment>
