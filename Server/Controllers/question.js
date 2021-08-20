@@ -50,7 +50,7 @@ module.exports.addQuestion = async (req, res) => {
   question.voteCount = 0;
   //console.log(getDate());
   question.resolved = false;
-  question.postedOn = new Date(24 - 7 - 2020);
+  question.postedOn = getDate();
   await question.save();
   res.send("Added new question");
 };
