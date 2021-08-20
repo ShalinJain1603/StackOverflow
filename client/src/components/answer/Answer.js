@@ -2,10 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import Modal from "../UI/Modal";
 const Answer = (props) => {
   const history = useHistory();
   const [showButton, setShowButton] = useState(false);
-
+  const [showLoginModal, setShowLoginModal] = useState(false);
   useEffect(() => {
     const isAuthor = async () => {
       const { data: isAuthorized } = await axios.get(
@@ -26,6 +27,8 @@ const Answer = (props) => {
     );
     if (data !== "You must login first") {
       props.setQuestion(data);
+    } else {
+      setShowLoginModal(true);
     }
   };
   const answerDownVoteHandler = async (event) => {
@@ -36,6 +39,8 @@ const Answer = (props) => {
     );
     if (data !== "You must login first") {
       props.setQuestion(data);
+    } else {
+      setShowLoginModal(true);
     }
   };
   const DeleteHandler = async () => {
@@ -49,8 +54,34 @@ const Answer = (props) => {
       props.setQuestion(data);
     }
   };
+
+  const closeModalLogin = () => {
+    setShowLoginModal(false);
+  };
+
+  const loginPrompt = (
+    <div>
+      <h2>
+        You must login first!!
+        <button
+          onClick={closeModalLogin}
+          className="btn btn-sm btn-danger ms-5"
+        >
+          Close
+        </button>
+      </h2>
+
+      <a
+        className="btn btn-info me-auto"
+        href="http://localhost:4000/auth/outlook"
+      >
+        Login with outlook
+      </a>
+    </div>
+  );
   return (
     <div>
+      {showLoginModal && <Modal>{loginPrompt}</Modal>}
       <h1> {props.answer.author.firstname}</h1>
       <h3>{props.answer.text}</h3>
       <div className="text-align-center align-items-center d-flex flex-column w-25">

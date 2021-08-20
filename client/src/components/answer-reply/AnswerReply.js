@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import Modal from "../UI/Modal";
 const AnswerReply = (props) => {
   const [showButton, setShowButton] = useState(false);
-
+  const [showLoginModal, setShowLoginModal] = useState(false);
   useEffect(() => {
     const isAuthor = async () => {
       const { data: isAuthorized } = await axios.get(
@@ -23,6 +24,8 @@ const AnswerReply = (props) => {
     );
     if (data !== "You must login first") {
       props.setQuestion(data);
+    } else {
+      setShowLoginModal(true);
     }
   };
   const replyDownVoteHandler = async (event) => {
@@ -33,6 +36,8 @@ const AnswerReply = (props) => {
     );
     if (data !== "You must login first") {
       props.setQuestion(data);
+    } else {
+      setShowLoginModal(true);
     }
   };
 
@@ -47,8 +52,33 @@ const AnswerReply = (props) => {
       props.setQuestion(data);
     }
   };
+  const closeModalLogin = () => {
+    setShowLoginModal(false);
+  };
+
+  const loginPrompt = (
+    <div>
+      <h2>
+        You must login first!!
+        <button
+          onClick={closeModalLogin}
+          className="btn btn-sm btn-danger ms-5"
+        >
+          Close
+        </button>
+      </h2>
+
+      <a
+        className="btn btn-info me-auto"
+        href="http://localhost:4000/auth/outlook"
+      >
+        Login with outlook
+      </a>
+    </div>
+  );
   return (
     <div>
+      {showLoginModal && <Modal>{loginPrompt}</Modal>}
       <p> {props.reply.text}</p>
       <div className="text-align-center align-items-center d-flex flex-column w-25">
         <OverlayTrigger
