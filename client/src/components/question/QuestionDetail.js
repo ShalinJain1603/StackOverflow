@@ -158,11 +158,10 @@ const QuestionDetail = (props) => {
                 setQuestion={setQuestion}
               />
             )}
-            <AllAnswerReplies >
+            { question &&
+              answer.replies.length && (<AllAnswerReplies >
 
-              {question &&
-                answer.replies.length &&
-                answer.replies
+                { answer.replies
                   .sort(answerSorting())
                   .map((reply) => (
                     <AnswerReply
@@ -172,7 +171,7 @@ const QuestionDetail = (props) => {
                       setQuestion={setQuestion}
                     />
                   ))}
-            </AllAnswerReplies>
+              </AllAnswerReplies>)}
           </div>
         ))}
     </Fragment>

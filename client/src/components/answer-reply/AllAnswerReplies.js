@@ -3,6 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 const AllAnswerReplies = ({
     children
 }) => {
+    console.log(children);
     const [visibleReplies, setVisibleReplies] = useState(children.slice(0, 3))
     const [difference, setDifference] = useState(null)
 
@@ -25,12 +26,12 @@ const AllAnswerReplies = ({
                 >
                     show <b>{difference}</b> more replies
                 </a>
-            ) : (
+            ) : (children.length > 3 ? (
                 <a
                     onClick={() => setVisibleReplies(children.slice(0, 3))}
                 >
                     Hide replies
-                </a>
+                </a>) : <p></p>
             )}
         </div>
     )
