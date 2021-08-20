@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Offcanvas } from "react-bootstrap";
+import { Offcanvas, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import {
   Collapse,
@@ -73,9 +73,17 @@ const Header = (props) => {
       <Navbar dark expand="md" className="bg-dark ">
         <div className="container">
           <NavbarToggler onClick={toggleNav} />
-          <span onClick={handleShow} className={classes.sidebarToggle}>
-            <i class="fa fa-align-justify fa-lg text-light"></i>
-          </span>
+
+          <OverlayTrigger
+            key="bottom"
+            placement="bottom"
+            overlay={<Tooltip id={`tooltip-bottom`}>Sidebar</Tooltip>}
+          >
+            <span onClick={handleShow} className={classes.sidebarToggle}>
+              <i class="fa fa-align-justify fa-lg text-light"></i>
+            </span>
+          </OverlayTrigger>
+
           <NavbarBrand href="/">
             <img src="/Images/Logo/Logo.png" className={classes.logo} />
           </NavbarBrand>

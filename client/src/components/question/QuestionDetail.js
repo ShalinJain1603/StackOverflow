@@ -1,24 +1,45 @@
 import axios from "axios";
 import { Fragment, useEffect, useState } from "react";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import { Badge } from "reactstrap";
 import AddAnswerReply from "../answer-reply/AddAnswerReply";
-import AnswerReply from "../answer-reply/AnswerReply";
 import AllAnswerReplies from "../answer-reply/AllAnswerReplies";
+import AnswerReply from "../answer-reply/AnswerReply";
 import AddAnswer from "../answer/AddAnswer";
 import Answer from "../answer/Answer";
 import Modal from "../UI/Modal";
 
 const QuestionDetail = (props) => {
   const [showModal, setShowModal] = useState(false);
+  const [showModalFlash, setShowModalFlash] = useState(false);
   const [question, setQuestion] = useState(null);
   const { questionId } = useParams();
   const [answerSortType, setAnswersSortType] = useState("Oldest");
+  const [upvote, setUpvote] = useState("gray");
+  const [downvote, setDownVote] = useState("gray");
+  const [showButtons, setShowButtons] = useState(false);
   const history = useHistory();
   useEffect(() => {
     const fetchQuestion = async () => {
       const { data } = await axios.get(`/api/question/${questionId}`);
       setQuestion(data);
+      const { data: checkVote } = await axios.get(
+        `/api/question/${questionId}/checkVote`
+      );
+      if (checkVote.length !== 0) {
+        if (checkVote[0].vote === 1) {
+          setUpvote("green");
+        } else if (checkVote[0].vote === -1) {
+          setDownVote("red");
+        }
+      }
+      const { data: isAuthorized } = await axios.get(
+        `/api/question/${questionId}/isAuthor`
+      );
+      if (isAuthorized === "Allowed") {
+        setShowButtons(true);
+      }
     };
 
     fetchQuestion();
@@ -29,6 +50,8 @@ const QuestionDetail = (props) => {
     const { data } = await axios.post(`/api/question/${questionId}/vote`, {
       vote: 1,
     });
+    setDownVote("gray");
+    setUpvote("green");
     setQuestion(data);
   };
   const downVoteHandler = async (event) => {
@@ -36,6 +59,8 @@ const QuestionDetail = (props) => {
     const { data } = await axios.post(`/api/question/${questionId}/vote`, {
       vote: -1,
     });
+    setDownVote("red");
+    setUpvote("gray");
     setQuestion(data);
   };
 
@@ -65,14 +90,39 @@ const QuestionDetail = (props) => {
     history.push(`/questions/${questionId}/edit`);
   };
 
+  const DeleteModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
   const DeleteHandler = async () => {
     const res = await axios.post(`/api/question/${questionId}/delete`);
-    if (res.data === "Deleted Question") {
-      setShowModal(true);
-    } else {
-      console.log(res.data);
-    }
+    setShowModal(false);
+    setShowModalFlash(true);
   };
+
+  const promptMessage = (
+    <div>
+      <h2> Are you sure you want to delete ?</h2>
+      <button onClick={DeleteHandler}> Yes </button>
+      <button onClick={closeModal}> No </button>
+    </div>
+  );
+
+  const closeModalFlash = () => {
+    setShowModalFlash(false);
+    history.push("/questions");
+  };
+
+  const successMessage = (
+    <div>
+      <h2> Question Deleted :(</h2>
+      <button onClick={closeModalFlash}> Close</button>
+    </div>
+  );
 
   const ResolveHandler = async () => {
     const res = await axios.post(`/api/question/${questionId}/resolve`);
@@ -83,21 +133,12 @@ const QuestionDetail = (props) => {
     }
   };
 
-  const closeModal = () => {
-    setShowModal(false);
-    history.push("/questions");
-  };
-
-  const successMessage = (
-    <div>
-      <h2> Question Deleted </h2>
-      <button onClick={closeModal}> Close</button>
-    </div>
-  );
-
   return (
     <Fragment>
-      {showModal && <Modal onClick={closeModal}>{successMessage}</Modal>}
+      {showModal && <Modal>{promptMessage}</Modal>}
+      {showModalFlash && (
+        <Modal onClick={closeModalFlash}>{successMessage}</Modal>
+      )}
       {!question && (
         <p className="m-3">
           <div class="d-flex justify-content-center">
@@ -116,19 +157,60 @@ const QuestionDetail = (props) => {
           {!question.resolved && <span className="btn btn-success">Open</span>}
           {question.resolved && <span className="btn btn-danger">Closed</span>}
           <br />
-          <button onClick={ReDirectHandler}>Edit</button>
-          <button onClick={DeleteHandler}>Delete</button>
-          <button onClick={ResolveHandler}>Resolve</button>
-          <br />
+          {showButtons && (
+            <div>
+              <button onClick={ReDirectHandler}>Edit</button>
+              <button onClick={DeleteModal}>Delete</button>
+              <button onClick={ResolveHandler}>Resolve</button>
+              <br />
+            </div>
+          )}
+
           {question.author.firstname}
           <p> {question.text}</p>
-          <h2>
-            {" "}
-            {question.voteCount} Vote
-            {Math.abs(question.voteCount) === 1 ? "" : "s"}
-          </h2>
-          <button onClick={upVoteHandler}>Upvote </button>
-          <button onClick={downVoteHandler}>Downvote </button>
+          <div className="text-align-center align-items-center d-flex flex-column w-25">
+            <OverlayTrigger
+              key="top"
+              placement="top"
+              overlay={<Tooltip id={`tooltip-top`}>Upvote</Tooltip>}
+            >
+              <span onClick={upVoteHandler} className="ms-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="40"
+                  height="40"
+                  fill={upvote}
+                  class="bi bi-caret-up-square-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4 9h8a.5.5 0 0 0 .374-.832l-4-4.5a.5.5 0 0 0-.748 0l-4 4.5A.5.5 0 0 0 4 11z" />
+                </svg>
+              </span>
+            </OverlayTrigger>
+            <h2>
+              {" "}
+              {question.voteCount} Vote
+              {Math.abs(question.voteCount) === 1 ? "" : "s"}
+            </h2>
+            <OverlayTrigger
+              key="bottom"
+              placement="bottom"
+              overlay={<Tooltip id={`tooltip-bottom`}>Downvote</Tooltip>}
+            >
+              <span onClick={downVoteHandler} className="ms-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="40"
+                  height="40"
+                  fill={downvote}
+                  class="bi bi-caret-down-square-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4 4a.5.5 0 0 0-.374.832l4 4.5a.5.5 0 0 0 .748 0l4-4.5A.5.5 0 0 0 12 6H4z" />
+                </svg>
+              </span>
+            </OverlayTrigger>
+          </div>
         </div>
       )}
       {question && !question.resolved && (
@@ -158,20 +240,18 @@ const QuestionDetail = (props) => {
                 setQuestion={setQuestion}
               />
             )}
-            { question &&
-              answer.replies.length && (<AllAnswerReplies >
-
-                { answer.replies
-                  .sort(answerSorting())
-                  .map((reply) => (
-                    <AnswerReply
-                      reply={reply}
-                      questionId={questionId}
-                      answerId={answer._id}
-                      setQuestion={setQuestion}
-                    />
-                  ))}
-              </AllAnswerReplies>)}
+            {question && answer.replies.length && (
+              <AllAnswerReplies>
+                {answer.replies.sort(answerSorting()).map((reply) => (
+                  <AnswerReply
+                    reply={reply}
+                    questionId={questionId}
+                    answerId={answer._id}
+                    setQuestion={setQuestion}
+                  />
+                ))}
+              </AllAnswerReplies>
+            )}
           </div>
         ))}
     </Fragment>
