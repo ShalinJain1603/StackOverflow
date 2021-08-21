@@ -128,7 +128,12 @@ const Header = (props) => {
               className="btn btn-link"
               hidden={isloggedIn}
             >
-              <a href="http://localhost:4000/auth/outlook">SignUp / Login</a>
+              <a
+                href="http://localhost:4000/auth/outlook"
+                className="text-white"
+              >
+                SignUp / Login
+              </a>
             </button>
             <br />
             <button
@@ -136,7 +141,7 @@ const Header = (props) => {
               className="btn btn-link"
               hidden={!isloggedIn}
             >
-              <a href="http://localhost:4000/logout">
+              <a href="http://localhost:4000/logout" className="text-white">
                 <i class="fas fa-sign-out-alt"></i> Logout
               </a>
             </button>

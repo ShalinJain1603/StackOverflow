@@ -47,7 +47,7 @@ const Home = () => {
   }, []);
   return (
     <Fragment>
-      <div className="container">
+      <div className="container-fluid background">
         <div className="row">
           <div className="col-md-4">
             {hostelQuestions && <h1> {hostel} Questions</h1>}
