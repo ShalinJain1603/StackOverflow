@@ -97,6 +97,7 @@ const Answer = (props) => {
               <p className="text-muted d-inline-block ms-3">
                 {" "}
                 Answered by - {props.answer.author.firstname}
+                <p> posted {props.timeSince} ago</p>
               </p>
             </div>
           </div>
