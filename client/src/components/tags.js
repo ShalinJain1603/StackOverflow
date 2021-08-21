@@ -33,9 +33,9 @@ class TagComponent extends React.Component {
         onDelete={this.onDelete.bind(this)}
         onAddition={this.onAddition.bind(this)}
         classNames={{
-          root: "react-tags ms-3 mt-1",
+          root: "react-tags  mt-1",
           rootFocused: "is-focused",
-          selected: "react-tags__selected border w-50 min-height",
+          selected: "react-tags__selected border w-100 min-height",
           selectedTag: "react-tags__selected-tag btn btn-info m-1",
           selectedTagName: "react-tags__selected-tag-name",
           search: "react-tags__search",
