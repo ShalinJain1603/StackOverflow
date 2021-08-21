@@ -4,9 +4,9 @@ const { LETTERHEADS } = require("../utils/constants");
 module.exports.loginUser = async (req, res) => {
   const foundUser = await User.findOne({ outlook_id: req.user.id });
   if (!foundUser) {
-    res.redirect("http://localhost:3000/register");
+    res.redirect("/register");
   } else {
-    res.redirect("http://localhost:3000/");
+    res.redirect("/");
   }
 };
 

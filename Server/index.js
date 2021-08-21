@@ -38,7 +38,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "client/build")));
 
 app.use(
   mongoSanitize({
@@ -98,6 +98,10 @@ app.use("/api/profile", userroutes);
 app.use("/api/question", questionroutes);
 app.use("/api/question", answerroutes);
 app.use("/api/question", replyroutes);
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/client/build/index.html"));
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running at port ${PORT}`);
