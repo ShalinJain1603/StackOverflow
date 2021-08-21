@@ -95,7 +95,7 @@ const AnswerReply = (props) => {
                 placement="top"
                 overlay={<Tooltip id={`tooltip-top`}>Upvote</Tooltip>}
               >
-                <span onClick={replyUpVoteHandler} className="ms-3">
+                <span onClick={replyUpVoteHandler}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -108,13 +108,13 @@ const AnswerReply = (props) => {
                   </svg>
                 </span>
               </OverlayTrigger>
-              <h5>{props.reply.voteCount}</h5>
+              <h5 className="mb-0">{props.reply.voteCount}</h5>
               <OverlayTrigger
                 key="bottom"
                 placement="bottom"
                 overlay={<Tooltip id={`tooltip-bottom`}>Downvote</Tooltip>}
               >
-                <span onClick={replyDownVoteHandler} className="ms-3">
+                <span onClick={replyDownVoteHandler}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"

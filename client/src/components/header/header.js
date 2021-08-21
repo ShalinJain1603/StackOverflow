@@ -46,26 +46,34 @@ const Header = (props) => {
         className={classes.offcanvas}
       >
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>StackOverflow</Offcanvas.Title>
+          <Offcanvas.Title>IITG StackOverflow</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <Link to="/" onClick={handleClose}>
+          <Link to="/" onClick={handleClose} className={classes.linkDesign}>
             Home
           </Link>
           <br />
-          <Link to="/questions" onClick={handleClose}>
+          <Link
+            to="/questions"
+            onClick={handleClose}
+            className={classes.linkDesign}
+          >
             All Questions
           </Link>
           <br />
-          <Link to="/questions/new" onClick={handleClose}>
+          <Link
+            to="/questions/new"
+            onClick={handleClose}
+            className={classes.linkDesign}
+          >
             New Question
           </Link>
           <br />
-          <Link to="/user" onClick={handleClose}>
+          <Link to="/user" onClick={handleClose} className={classes.linkDesign}>
             Profile
           </Link>
           <br />
-          <Link to="/tags" onClick={handleClose}>
+          <Link to="/tags" onClick={handleClose} className={classes.linkDesign}>
             Tags
           </Link>
         </Offcanvas.Body>

@@ -7,8 +7,13 @@
 .logo {
     width: 100px;
 }
+.linkDesign{
+    text-decoration: none;
+    color: black;
+}
 @media (max-width: 770px) {
     .sidebarToggle {
         display: none;
     }
 }
+
