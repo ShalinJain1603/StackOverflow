@@ -8,7 +8,6 @@ module.exports.userDetails = async (req, res) => {
 
 module.exports.editDetails = async (req, res) => {
   const user = await User.findOne({ outlook_id: req.user.id });
-  console.log(req.body);
   user.firstname = req.body.firstname;
   user.lastname = req.body.lastname;
   user.batch = req.body.batch;

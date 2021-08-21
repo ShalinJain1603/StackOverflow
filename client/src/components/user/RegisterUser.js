@@ -7,52 +7,39 @@ const RegisterUserForm = (props) => {
   const history = useHistory();
   const {
     value: firstname,
-    isTouched: firstnameIsTouched,
     valueIsValid: firstnameIsValid,
     hasError: firstnameHasError,
     onBlur: firstnameOnBlur,
-    onChange: firstnameOnChange,
-    reset: firstnameReset,
+    onChange: firstnameOnChange
   } = useInput((firstname) => firstname.trim() !== "");
 
   const {
     value: lastname,
-    isTouched: lastnameIsTouched,
     valueIsValid: lastnameIsValid,
     hasError: lastnameHasError,
     onBlur: lastnameOnBlur,
-    onChange: lastnameOnChange,
-    reset: lastnameReset,
+    onChange: lastnameOnChange
   } = useInput((lastname) => lastname.trim !== "");
 
   const {
     value: batch,
-    isTouched: batchIsTouched,
     valueIsValid: batchIsValid,
-    hasError: batchHasError,
     onBlur: batchOnBlur,
-    onChange: batchOnChange,
-    reset: batchReset,
+    onChange: batchOnChange
   } = useInput((batch) => batch.trim !== "");
 
   const {
     value: hostel,
-    isTouched: hostelIsTouched,
     valueIsValid: hostelIsValid,
-    hasError: hostelHasError,
     onBlur: hostelOnBlur,
-    onChange: hostelOnChange,
-    reset: hostelReset,
+    onChange: hostelOnChange
   } = useInput((hostel) => hostel.trim !== "");
 
   const {
     value: department,
-    isTouched: departmentIsTouched,
     valueIsValid: departmentIsValid,
-    hasError: departmentHasError,
     onBlur: departmentOnBlur,
     onChange: departmentOnChange,
-    reset: departmentReset,
   } = useInput((department) => department.trim !== "");
 
   const formSubmitHandler = async (event) => {
@@ -65,7 +52,6 @@ const RegisterUserForm = (props) => {
       department,
     };
     const res = await axios.post("/registerUser", data);
-    console.log(res);
     const navbar = document.querySelector("#navbar_id");
     navbar.toggleAttribute("hidden");
     history.push("/");

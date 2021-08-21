@@ -1,16 +1,13 @@
 import axios from "axios";
 import { React, useState } from "react";
-import { useHistory } from "react-router-dom";
 import useInput from "../../hooks/use-input";
 import Modal from "../UI/Modal";
+
 const AddAnswerReply = (props) => {
-  const history = useHistory();
   const [showLoginModal, setShowLoginModal] = useState(false);
   const {
     value: reply,
-    isTouched: replyIsTouched,
     valueIsValid: replyIsValid,
-    hasError: replyHasError,
     onBlur: replyOnBlur,
     onChange: replyOnChange,
     reset: replyReset,
@@ -68,7 +65,7 @@ const AddAnswerReply = (props) => {
           className="flex-fill"
           placeholder="Add a reply"
         />
-        <button className="btn btn-success btn-sm"> Post</button>
+        {replyIsValid && <button className="btn btn-success btn-sm"> Post</button>}
       </div>
     </form>
   );

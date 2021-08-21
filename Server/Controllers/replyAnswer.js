@@ -39,7 +39,6 @@ module.exports.addReply = async (req, res) => {
         },
       ],
     });
-  console.log(question);
   res.json(question);
 };
 

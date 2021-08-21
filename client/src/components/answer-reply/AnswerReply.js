@@ -15,7 +15,7 @@ const AnswerReply = (props) => {
       }
     };
     isAuthor();
-  }, []);
+  }, [props.questionId, props.answerId]);
   const replyUpVoteHandler = async (event) => {
     event.preventDefault();
     const { data } = await axios.post(

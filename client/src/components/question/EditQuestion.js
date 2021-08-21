@@ -14,23 +14,18 @@ const EditQuestionForm = (props) => {
 
   const {
     value: title,
-    isTouched: titleIsTouched,
     valueIsValid: titleIsValid,
-    hasError: titleHasError,
     onBlur: titleOnBlur,
     onChange: titleOnChange,
-    reset: titleReset,
     onset: titlePreset,
   } = useInput((title) => title.trim() !== "");
 
   const {
     value: question,
-    isTouched: questionIsTouched,
     valueIsValid: questionIsValid,
     hasError: questionHasError,
     onBlur: questionOnBlur,
     onChange: questionOnChange,
-    reset: questionReset,
     onset: questionPreset,
   } = useInput((question) => question.trim !== "");
 
@@ -44,7 +39,7 @@ const EditQuestionForm = (props) => {
     };
 
     fetchQuestion();
-  }, []);
+  }, [questionId]);
 
   const formSubmitHandler = async (event) => {
     event.preventDefault();

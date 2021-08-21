@@ -44,7 +44,7 @@ const QuestionDetail = (props) => {
     };
 
     fetchQuestion();
-  }, []);
+  }, [questionId]);
 
   const upVoteHandler = async (event) => {
     event.preventDefault();

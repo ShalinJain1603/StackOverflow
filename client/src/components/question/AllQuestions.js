@@ -1,14 +1,13 @@
 import axios from "axios";
 import React, { Fragment, useEffect, useState } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import SearchField from "react-search-field";
 import { Card, CardBody, CardTitle } from "reactstrap";
 import classes from "./AllQuestion.module.css";
 const AllQuestions = () => {
   const [questions, setQuestions] = useState(null);
   const [safeQuestions, setSafeQuestions] = useState(null);
-  const history = useHistory();
   const [sortBy, setSortBy] = useState("Newest");
   useEffect(() => {
     console.log("AllQuestions");
