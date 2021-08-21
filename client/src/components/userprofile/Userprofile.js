@@ -32,15 +32,32 @@ const UserProfile = (props) => {
       {user && (
         <div className="container m-3">
           <div className="row">
-            <div className="col-md-4 align-items-center d-flex flex-column mt-5">
-              <img src={user?.image?.url} className={classes.letterhead} />
-              <h2>
-                {user.firstname} {user.lastname}
-              </h2>
-              <h3> {user.batch} batch</h3>
-              <h3> {user.department}</h3>
-              <h3> {user.hostel}</h3>
-              <button onClick={ReDirectHandler}>Edit</button>
+            <div className="col-md-4">
+              <div className="align-items-center d-flex flex-column mt-3">
+                <div className="card d-flex flex-column w-50">
+                  <img
+                    src={user?.image?.url}
+                    className="img-fluid card-img-top"
+                  />
+                  <div className="card-body">
+                    <div className="card-title"> User Details:</div>
+                    <ul className="list-group list-group-flush">
+                      <li className="list-group-item">
+                        {user.firstname} {user.lastname}
+                      </li>
+                      <li className="list-group-item">{user.batch} batch</li>
+                      <li className="list-group-item">{user.department}</li>
+                      <li className="list-group-item"> {user.hostel}</li>
+                    </ul>
+                  </div>
+                </div>
+                <button
+                  onClick={ReDirectHandler}
+                  className="btn btn-warning w-50 mt-3"
+                >
+                  Edit
+                </button>
+              </div>
             </div>
             <div className="col-md-8">
               My Questions : {questions && questions.length}
