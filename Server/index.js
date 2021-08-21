@@ -17,7 +17,7 @@ const answerroutes = require("./Routes/answer");
 const replyroutes = require("./Routes/replyAnswer");
 const userroutes = require("./Routes/user");
 
-const dbUrl = "mongodb://localhost:27017/stackoverflow";
+const dbUrl = process.env.DB_URL || "mongodb://localhost:27017/stackoverflow";
 mongoose
   .connect(dbUrl, {
     useNewUrlParser: true,

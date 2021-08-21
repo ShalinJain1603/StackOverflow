@@ -148,7 +148,7 @@ const RegisterUserForm = (props) => {
           >
             <option value="">--Select your hostel--</option>
             <option value="Brahmaputra">Brahmaputra</option>
-            <option value="Umium">Umium</option>
+            <option value="Umiam">Umiam</option>
             <option value="Kameng">Kameng</option>
             <option value="Dihing">Dihing</option>
             <option value="Dhansiri">Dhansiri</option>
