@@ -1,13 +1,10 @@
 const Question = require("../models/question");
 const User = require("../models/user");
-const Answer = require("../models/answer"); // For populating Answers field
-const Reply = require("../models/replyAnswer"); // For populating Replies field
 const Vote = require("../models/votes");
 const getDate = require("../utils/getDate");
 
 module.exports.showAllQuestions = async (req, res) => {
   const { user } = req.query;
-  console.log(user);
   if (user) {
     const questions = await Question.find({ author: user }).populate("author");
     res.json(questions);
@@ -66,14 +63,12 @@ module.exports.addQuestion = async (req, res) => {
 module.exports.editQuestion = async (req, res) => {
   const { id } = req.params;
   const question = await Question.findByIdAndUpdate(id, req.body);
-  console.log(question);
   res.send("Question edited");
 };
 
 module.exports.deleteQuestion = async (req, res) => {
   const { id } = req.params;
   const question = await Question.findByIdAndDelete(id);
-  console.log(question);
   res.send("Deleted Question");
 };
 

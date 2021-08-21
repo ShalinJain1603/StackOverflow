@@ -1,16 +1,12 @@
 import axios from "axios";
 import { React, useState } from "react";
-import { useHistory } from "react-router-dom";
 import useInput from "../../hooks/use-input";
 import Modal from "../UI/Modal";
 const AddAnswer = (props) => {
-  const history = useHistory();
+
   const [showLoginModal, setShowLoginModal] = useState(false);
   const {
     value: answer,
-    isTouched: answerIsTouched,
-    valueIsValid: answerIsValid,
-    hasError: answerHasError,
     onBlur: answerOnBlur,
     onChange: answerOnChange,
     reset: answerReset,

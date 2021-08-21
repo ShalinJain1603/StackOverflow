@@ -11,22 +11,18 @@ const NewQuestionForm = (props) => {
   const history = useHistory();
   const {
     value: title,
-    isTouched: titleIsTouched,
     valueIsValid: titleIsValid,
     hasError: titleHasError,
     onBlur: titleOnBlur,
-    onChange: titleOnChange,
-    reset: titleReset,
+    onChange: titleOnChange
   } = useInput((title) => title.trim() !== "");
 
   const {
     value: question,
-    isTouched: questionIsTouched,
     valueIsValid: questionIsValid,
     hasError: questionHasError,
     onBlur: questionOnBlur,
-    onChange: questionOnChange,
-    reset: questionReset,
+    onChange: questionOnChange
   } = useInput((question) => question.trim !== "");
 
   const formSubmitHandler = async (event) => {

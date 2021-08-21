@@ -1,10 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+
 import Modal from "../UI/Modal";
 const Answer = (props) => {
-  const history = useHistory();
   const [showButton, setShowButton] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   useEffect(() => {

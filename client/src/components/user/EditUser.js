@@ -9,56 +9,43 @@ const EditUserForm = (props) => {
   const [image, setImage] = useState(null);
   const {
     value: firstname,
-    isTouched: firstnameIsTouched,
     valueIsValid: firstnameIsValid,
     hasError: firstnameHasError,
     onBlur: firstnameOnBlur,
     onChange: firstnameOnChange,
-    reset: firstnameReset,
     onset: firstnameSet,
   } = useInput((firstname) => firstname.trim() !== "");
 
   const {
     value: lastname,
-    isTouched: lastnameIsTouched,
     valueIsValid: lastnameIsValid,
     hasError: lastnameHasError,
     onBlur: lastnameOnBlur,
     onChange: lastnameOnChange,
-    reset: lastnameReset,
     onset: lastnameSet,
   } = useInput((lastname) => lastname.trim !== "");
 
   const {
     value: batch,
-    isTouched: batchIsTouched,
     valueIsValid: batchIsValid,
-    hasError: batchHasError,
     onBlur: batchOnBlur,
     onChange: batchOnChange,
-    reset: batchReset,
     onset: batchSet,
   } = useInput((batch) => batch.trim !== "");
 
   const {
     value: hostel,
-    isTouched: hostelIsTouched,
     valueIsValid: hostelIsValid,
-    hasError: hostelHasError,
     onBlur: hostelOnBlur,
     onChange: hostelOnChange,
-    reset: hostelReset,
     onset: hostelSet,
   } = useInput((hostel) => hostel.trim !== "");
 
   const {
     value: department,
-    isTouched: departmentIsTouched,
     valueIsValid: departmentIsValid,
-    hasError: departmentHasError,
     onBlur: departmentOnBlur,
     onChange: departmentOnChange,
-    reset: departmentReset,
     onset: departmentSet,
   } = useInput((department) => department.trim !== "");
 

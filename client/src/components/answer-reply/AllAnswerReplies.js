@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const AllAnswerReplies = ({
     children
@@ -13,7 +13,7 @@ const AllAnswerReplies = ({
 
     useEffect(() => {
         setDifference(children.length - visibleReplies.length)
-    }, [visibleReplies])
+    }, [children.length, visibleReplies])
 
 
     return (
