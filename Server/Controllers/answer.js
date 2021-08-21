@@ -31,7 +31,6 @@ module.exports.addAnswer = async (req, res) => {
   const answer = new Answer(req.body);
   answer.author = user;
   answer.voteCount = 0;
-  //const date = `${getDate()}`;
   answer.postedOn = new Date(getDate());
   question.answers.push(answer);
   await answer.save();

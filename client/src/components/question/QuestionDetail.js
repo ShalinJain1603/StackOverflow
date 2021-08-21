@@ -160,7 +160,6 @@ const QuestionDetail = (props) => {
 
   const ResolveHandler = async () => {
     const res = await axios.post(`/api/question/${questionId}/resolve`);
-    console.log(res.data);
     if (res.data === "Success") {
       const { data } = await axios.get(`/api/question/${questionId}`);
       setQuestion(data);

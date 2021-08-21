@@ -29,7 +29,6 @@ module.exports.registerUser = async (req, res) => {
     const head = req.user.displayName[0];
     user.image.url = LETTERHEADS[head];
     await user.save();
-    console.log(user);
     res.send("User registered");
   } else {
     res.send("User already registered once");

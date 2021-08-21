@@ -10,7 +10,6 @@ const path = require("path");
 const mongoSanitize = require("express-mongo-sanitize");
 const helmet = require("helmet");
 
-
 const app = express();
 const PORT = process.env.PORT || 4000;
 
@@ -41,13 +40,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use(mongoSanitize({
-  replaceWith: '_'
-}))
+app.use(
+  mongoSanitize({
+    replaceWith: "_",
+  })
+);
 
-app.use(helmet({
-  contentSecurityPolicy: false
-}))
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 
 // Passport-Outlook Config
 passport.serializeUser(function (user, done) {
@@ -88,7 +91,6 @@ app.use((req, res, next) => {
 // Home page
 app.get("/", (req, res) => {
   res.send("Connected to backend-server");
-  // res.render("testing");
 });
 
 app.use("/", outlookroutes);

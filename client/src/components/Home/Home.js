@@ -13,7 +13,6 @@ const Home = () => {
   const [department, setDepartment] = useState(null);
   useEffect(() => {
     const fetchPopularQuestions = async () => {
-      console.log("home");
       const { data } = await axios.get("/api/question/popular");
       setPopularQuestions(data);
     };
@@ -47,7 +46,7 @@ const Home = () => {
   }, []);
   return (
     <Fragment>
-      <div className="container">
+      <div className="container-fluid background">
         <div className="row">
           <div className="col-md-4">
             {hostelQuestions && <h1> {hostel} Questions</h1>}

@@ -55,7 +55,6 @@ const EditQuestionForm = (props) => {
     };
     const res = await axios.post(`/api/question/${questionId}/edit`, data);
     setShowModal(true);
-    console.log(res);
     setStatus(res.data);
   };
 

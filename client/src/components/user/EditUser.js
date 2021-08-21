@@ -69,9 +69,7 @@ const EditUserForm = (props) => {
     formData.append("batch", batch);
     formData.append("hostel", hostel);
     formData.append("department", department);
-    console.log(formData);
     const res = await axios.post("/api/profile/edit", formData);
-    console.log(res);
     history.push("/user");
   };
   const imageChangeHandler = ({ target }) => {

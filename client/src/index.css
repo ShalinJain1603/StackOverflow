@@ -20,3 +20,10 @@ code {
 .get-margin {
   margin-left: 75px;
 }
+
+.background {
+  background: url("Background/background.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  
+}
