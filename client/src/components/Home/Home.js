@@ -50,7 +50,7 @@ const Home = () => {
       <div className="container">
         <div className="row">
           <div className="col-md-4">
-            {hostelQuestions && <h1> {hostel} Trivia</h1>}
+            {hostelQuestions && <h1> {hostel} Questions</h1>}
             {hostelQuestions &&
               hostelQuestions.map((hostelQuestion) => (
                 <OverlayTrigger
@@ -122,7 +122,7 @@ const Home = () => {
           </div>
 
           <div className="col-md-4">
-            {departmentQuestions && <h1> {department} Trivia</h1>}
+            {departmentQuestions && <h1> {department} Questions</h1>}
             {departmentQuestions &&
               departmentQuestions.map((departmentQuestion) => (
                 <OverlayTrigger

@@ -64,36 +64,50 @@ const NewQuestionForm = (props) => {
   return (
     <Fragment>
       {showModal && <Modal onClick={closeModal}>{successMessage}</Modal>}
-      <form onSubmit={formSubmitHandler} className={classes.form}>
-        <div>
-          <label htmlFor="title">Title </label>
-          <input
-            type="text"
-            id="title"
-            onChange={titleOnChange}
-            onBlur={titleOnBlur}
-          />
-          {titleHasError && (
-            <p className={classes.parainvalid}>Title can't be empty</p>
-          )}
-        </div>
-        <div>
-          <label htmlFor="Question">Question </label>
-          <input
-            type="text"
-            id="Question"
-            onChange={questionOnChange}
-            onBlur={questionOnBlur}
-          />
-          {questionHasError && (
-            <p className={classes.parainvalid}>Question can't be empty</p>
-          )}
-        </div>
+      <div className="justify-content-center d-flex align-items-center vh-100 flex-column">
+        <h1>Add a new Question</h1>
+        <div className="w-50 border d-flex flex-column mx-auto p-3">
+          <form onSubmit={formSubmitHandler}>
+            <div className="mb-3">
+              <label htmlFor="title" className="form-label">
+                Title{" "}
+              </label>
+              <input
+                type="text"
+                id="title"
+                onChange={titleOnChange}
+                onBlur={titleOnBlur}
+                className="form-control"
+              />
+              {titleHasError && (
+                <p className={classes.parainvalid}>Title can't be empty</p>
+              )}
+            </div>
+            <div className="mb-3">
+              <label htmlFor="Question" className="form-label">
+                Question{" "}
+              </label>
+              <input
+                type="text"
+                id="Question"
+                onChange={questionOnChange}
+                onBlur={questionOnBlur}
+                className="form-control"
+              />
+              {questionHasError && (
+                <p className={classes.parainvalid}>Question can't be empty</p>
+              )}
+            </div>
 
-        <TagComponent tags={[]} />
+            <label className="form-label">Add Tags</label>
+            <TagComponent tags={[]} />
 
-        {formIsValid && <button className={classes.submit}>Submit</button>}
-      </form>
+            {formIsValid && (
+              <button className="btn btn-success mt-3 w-100">Submit</button>
+            )}
+          </form>
+        </div>
+      </div>
     </Fragment>
   );
 };

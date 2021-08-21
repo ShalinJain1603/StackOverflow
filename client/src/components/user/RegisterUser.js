@@ -72,7 +72,9 @@ const RegisterUserForm = (props) => {
     hideNav();
   });
   return (
-    <div className={classes.formShape}>
+    <div className="d-flex flex-column vh-100 justify-content-center w-50 mx-auto">
+      <h1>Registration Form</h1>
+      <h3>Let us know you a little bit more..</h3>
       <form onSubmit={formSubmitHandler} className={classes.form}>
         <div className="form-group">
           <label className="form-label" htmlFor="firstname">
@@ -172,7 +174,7 @@ const RegisterUserForm = (props) => {
           </select>
         </div>
         {formIsValid && (
-          <button className="btn btn-success mt-3">Submit</button>
+          <button className="btn btn-success mt-3 w-100">Register</button>
         )}
       </form>
     </div>

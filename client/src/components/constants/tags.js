@@ -99,4 +99,7 @@ export const TAGS = [
   { id: 98, name: "Lecture Hall" },
   { id: 99, name: "Admin Building" },
   { id: 100, name: "Auditorium" },
+  { id: 101, name: "Placements" },
+  { id: 102, name: "Internship" },
+  { id: 103, name: "SWC" },
 ];
