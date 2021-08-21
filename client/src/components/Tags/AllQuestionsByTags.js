@@ -44,7 +44,6 @@ const AllQuestionsByTag = () => {
       Tags: names,
     };
     const { data } = await axios.post("/api/question/tags", selectedTags);
-    console.log(data);
     setQuestions(data);
   };
   return (

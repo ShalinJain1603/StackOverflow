@@ -14,7 +14,7 @@ const NewQuestionForm = (props) => {
     valueIsValid: titleIsValid,
     hasError: titleHasError,
     onBlur: titleOnBlur,
-    onChange: titleOnChange
+    onChange: titleOnChange,
   } = useInput((title) => title.trim() !== "");
 
   const {
@@ -22,7 +22,7 @@ const NewQuestionForm = (props) => {
     valueIsValid: questionIsValid,
     hasError: questionHasError,
     onBlur: questionOnBlur,
-    onChange: questionOnChange
+    onChange: questionOnChange,
   } = useInput((question) => question.trim !== "");
 
   const formSubmitHandler = async (event) => {
@@ -39,7 +39,6 @@ const NewQuestionForm = (props) => {
     };
     const res = await axios.post("/api/question/new", data);
     setShowModal(true);
-    //console.log(res);
   };
   const closeModal = () => {
     setShowModal(false);

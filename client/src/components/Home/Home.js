@@ -13,7 +13,6 @@ const Home = () => {
   const [department, setDepartment] = useState(null);
   useEffect(() => {
     const fetchPopularQuestions = async () => {
-      console.log("home");
       const { data } = await axios.get("/api/question/popular");
       setPopularQuestions(data);
     };

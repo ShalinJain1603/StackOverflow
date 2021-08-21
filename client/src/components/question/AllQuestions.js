@@ -10,16 +10,13 @@ const AllQuestions = () => {
   const [safeQuestions, setSafeQuestions] = useState(null);
   const [sortBy, setSortBy] = useState("Newest");
   useEffect(() => {
-    console.log("AllQuestions");
     const allQuestions = async () => {
       const { data } = await axios.get("/api/question");
-      //console.log(data);
       setQuestions(data);
       setSafeQuestions(data);
     };
     allQuestions();
   }, []);
-
 
   const timeSince = (date) => {
     date = new Date(date);
@@ -47,8 +44,7 @@ const AllQuestions = () => {
       return Math.floor(interval) + " minutes";
     }
     return Math.floor(seconds) + " seconds";
-  }
-
+  };
 
   const questionSorting = () => {
     switch (sortBy) {

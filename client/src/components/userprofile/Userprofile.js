@@ -8,16 +8,13 @@ const UserProfile = (props) => {
   const [questions, setQuestions] = useState(null);
   const history = useHistory();
   useEffect(() => {
-    console.log("User");
     const getUser = async () => {
       const { data: userData } = await axios.get("/api/profile");
-      console.log(userData);
       setUser(userData);
 
       const { data: questionData } = await axios.get(
         `/api/question?user=${userData._id}`
       );
-      console.log(questionData);
       setQuestions(questionData);
     };
     getUser();

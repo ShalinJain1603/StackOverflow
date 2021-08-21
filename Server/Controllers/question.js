@@ -42,18 +42,19 @@ module.exports.showByTags = async (req, res) => {
 
 module.exports.popularQuestions = async (req, res) => {
   var questions = await Question.find({}).populate("author");
-  questions = questions.sort((a, b) => {
-    return b.voteCount - a.voteCount;
-  }).slice(0, 3);
+  questions = questions
+    .sort((a, b) => {
+      return b.voteCount - a.voteCount;
+    })
+    .slice(0, 3);
   res.json(questions);
-}
+};
 
 module.exports.addQuestion = async (req, res) => {
   const user = await User.findOne({ outlook_id: req.user.id });
   const question = new Question(req.body);
   question.author = user;
   question.voteCount = 0;
-  //console.log(getDate());
   question.resolved = false;
   question.postedOn = getDate();
   await question.save();
@@ -147,13 +148,14 @@ module.exports.hostelQuestions = async (req, res) => {
     tags: { $elemMatch: { $in: hostel } },
   }).populate("author");
   if (questions.length > 3) {
-    questions = questions.sort((a, b) => {
-      return b.voteCount - a.voteCount;
-    }).slice(0, 3);
+    questions = questions
+      .sort((a, b) => {
+        return b.voteCount - a.voteCount;
+      })
+      .slice(0, 3);
   }
   res.json({ hostel, questions });
-
-}
+};
 
 module.exports.departmentQuestions = async (req, res) => {
   const userId = req.user.id;
@@ -166,10 +168,11 @@ module.exports.departmentQuestions = async (req, res) => {
     tags: { $elemMatch: { $in: department } },
   }).populate("author");
   if (questions.length > 3) {
-    questions = questions.sort((a, b) => {
-      return b.voteCount - a.voteCount;
-    }).slice(0, 3);
+    questions = questions
+      .sort((a, b) => {
+        return b.voteCount - a.voteCount;
+      })
+      .slice(0, 3);
   }
   res.json({ department, questions });
-
-}
+};

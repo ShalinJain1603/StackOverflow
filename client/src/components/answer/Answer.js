@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
-
 import Modal from "../UI/Modal";
+
 const Answer = (props) => {
   const [showButton, setShowButton] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -47,7 +47,6 @@ const Answer = (props) => {
       `/api/question/${props.questionId}/answer/${props.answer._id}`,
       {}
     );
-    console.log(res.data);
     const { data } = await axios.get(`/api/question/${props.questionId}`);
     if (data !== "You must login first") {
       props.setQuestion(data);

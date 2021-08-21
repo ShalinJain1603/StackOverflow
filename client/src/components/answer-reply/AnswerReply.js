@@ -46,7 +46,6 @@ const AnswerReply = (props) => {
       `/api/question/${props.questionId}/answer/${props.answerId}/reply/${props.reply._id}`,
       {}
     );
-    console.log(res.data);
     const { data } = await axios.get(`/api/question/${props.questionId}`);
     if (data !== "You must login first") {
       props.setQuestion(data);
