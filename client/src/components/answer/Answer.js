@@ -84,6 +84,7 @@ const Answer = (props) => {
       {showLoginModal && <Modal>{loginPrompt}</Modal>}
       <h1> {props.answer.author.firstname}</h1>
       <h3>{props.answer.text}</h3>
+      <h3> posted {props.timeSince} ago</h3>
       <div className="text-align-center align-items-center d-flex flex-column w-25">
         <OverlayTrigger
           key="top"
