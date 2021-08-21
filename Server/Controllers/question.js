@@ -150,7 +150,7 @@ module.exports.hostelQuestions = async (req, res) => {
   }
   var questions = await Question.find({
     tags: { $elemMatch: { $in: hostel } },
-  });
+  }).populate("author");
   if (questions.length > 3) {
     questions = questions.sort((a, b) => {
       return b.voteCount - a.voteCount;
@@ -169,7 +169,7 @@ module.exports.departmentQuestions = async (req, res) => {
   }
   var questions = await Question.find({
     tags: { $elemMatch: { $in: department } },
-  });
+  }).populate("author");
   if (questions.length > 3) {
     questions = questions.sort((a, b) => {
       return b.voteCount - a.voteCount;
