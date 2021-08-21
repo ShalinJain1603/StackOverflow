@@ -23,8 +23,6 @@ module.exports.editDetails = async (req, res) => {
   }
 
   user.save();
-  console.log(user.image.url);
-  // await User.findOneAndUpdate({ outlook_id: req.user.id }, req.body);
   res.send("User edited successfully");
 };
 

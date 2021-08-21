@@ -13,11 +13,14 @@ const {
   addVote,
   resolveQuestion,
   checkVote,
-  popularQuestions
+  popularQuestions,
+  hostelQuestions,
+  departmentQuestions
 } = require("../Controllers/question");
 
 router.get("/", showAllQuestions);
-//router.get("/hostel", hostelQuestions);
+router.get("/department", isLoggedIn, departmentQuestions);
+router.get("/hostel", isLoggedIn, hostelQuestions);
 router.get("/popular", popularQuestions);
 router.post("/new", isLoggedIn, addQuestion);
 router.post("/tags", showByTags);

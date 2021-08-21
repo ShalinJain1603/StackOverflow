@@ -48,7 +48,6 @@ module.exports.popularQuestions = async (req, res) => {
   questions = questions.sort((a, b) => {
     return b.voteCount - a.voteCount;
   }).slice(0, 3);
-  console.log(questions);
   res.json(questions);
 }
 
@@ -122,7 +121,6 @@ module.exports.addVote = async (req, res) => {
     question.votes.push(newVote);
   }
   await question.save();
-  console.log(question);
   res.json(question);
 };
 
@@ -143,24 +141,40 @@ module.exports.checkVote = async (req, res) => {
   res.json(foundUser);
 };
 
-// module.exports.hostelQuestions = async (req, res) => {
-//   var userId = req?.user?._id;
-//   if (!userId) {
-//     res.send("You must login first!!!");
-//   }
-//   const user = await User.findOne({ outlook_id: req?.user?.id });
-//   if (!user) {
-//     res.send("af");
-//   }
-//   var hostel = user.hostel;
-//   if (!hostel) {
-//     res.send("F");
-//   }
-//   var questions = await Question.find({
-//     tags: { $elemMatch: hostel },
-//   }).sort((a, b) => {
-//     return b.voteCount - a.voteCount;
-//   }).slice(0, 3);
-//   res.json(questions);
+module.exports.hostelQuestions = async (req, res) => {
+  const userId = req.user.id;
+  const user = await User.findOne({ outlook_id: userId });
+  var hostel = user.hostel;
+  if (!hostel) {
+    res.json({});
+  }
+  var questions = await Question.find({
+    tags: { $elemMatch: { $in: hostel } },
+  });
+  if (questions.length > 3) {
+    questions = questions.sort((a, b) => {
+      return b.voteCount - a.voteCount;
+    }).slice(0, 3);
+  }
+  res.json({ hostel, questions });
 
-// }
+}
+
+module.exports.departmentQuestions = async (req, res) => {
+  const userId = req.user.id;
+  const user = await User.findOne({ outlook_id: userId });
+  var department = user.department;
+  if (!department) {
+    res.json({});
+  }
+  var questions = await Question.find({
+    tags: { $elemMatch: { $in: department } },
+  });
+  if (questions.length > 3) {
+    questions = questions.sort((a, b) => {
+      return b.voteCount - a.voteCount;
+    }).slice(0, 3);
+  }
+  res.json({ department, questions });
+
+}
