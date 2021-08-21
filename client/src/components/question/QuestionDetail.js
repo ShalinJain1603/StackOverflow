@@ -167,6 +167,34 @@ const QuestionDetail = (props) => {
     }
   };
 
+  const timeSince = (date) => {
+    date = new Date(date);
+    var seconds = Math.floor((new Date() - date) / 1000);
+
+    var interval = seconds / 31536000;
+
+    if (interval > 1) {
+      return Math.floor(interval) + " years";
+    }
+    interval = seconds / 2592000;
+    if (interval > 1) {
+      return Math.floor(interval) + " months";
+    }
+    interval = seconds / 86400;
+    if (interval > 1) {
+      return Math.floor(interval) + " days";
+    }
+    interval = seconds / 3600;
+    if (interval > 1) {
+      return Math.floor(interval) + " hours";
+    }
+    interval = seconds / 60;
+    if (interval > 1) {
+      return Math.floor(interval) + " minutes";
+    }
+    return Math.floor(seconds) + " seconds";
+  }
+
   return (
     <Fragment>
       {showModal && <Modal>{promptMessage}</Modal>}
@@ -202,6 +230,7 @@ const QuestionDetail = (props) => {
           )}
 
           {question.author.firstname}
+          <p> posted {timeSince(question.postedOn)} ago</p>
           <p> {question.text}</p>
           <div className="text-align-center align-items-center d-flex flex-column w-25">
             <OverlayTrigger
@@ -264,6 +293,7 @@ const QuestionDetail = (props) => {
         question.answers.sort(answerSorting()).map((answer) => (
           <div>
             <Answer
+              timeSince={timeSince(answer.postedOn)}
               answer={answer}
               questionId={questionId}
               setQuestion={setQuestion}
