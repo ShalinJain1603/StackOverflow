@@ -99,7 +99,8 @@ const EditUserForm = (props) => {
     departmentIsValid;
 
   return (
-    <div className={classes.formShape}>
+    <div className="d-flex flex-column vh-100 justify-content-center w-50 mx-auto">
+      <h1>Edit your details</h1>
       <form
         onSubmit={formSubmitHandler}
         className={classes.form}
@@ -207,9 +208,18 @@ const EditUserForm = (props) => {
             <option value="EP">EP</option>
           </select>
         </div>
-        <label htmlFor="image">Profile Picture</label>
-        <input type="file" id="image" onChange={imageChangeHandler} />
-        {formIsValid && <button className="btn btn-success mt-3">Edit</button>}
+        <label htmlFor="image" className="form-label">
+          Profile Picture
+        </label>
+        <input
+          type="file"
+          id="image"
+          onChange={imageChangeHandler}
+          className="form-control"
+        />
+        {formIsValid && (
+          <button className="btn btn-success mt-3 w-100">Edit</button>
+        )}
       </form>
     </div>
   );
