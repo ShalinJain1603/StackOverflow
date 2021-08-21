@@ -57,7 +57,7 @@ const AddAnswer = (props) => {
   return (
     <form onSubmit={addAnswerHandler}>
       {showLoginModal && <Modal>{loginPrompt}</Modal>}
-      <div>
+      <div className="d-flex">
         <label htmlFor="answer">Add an answer </label>
         <input
           type="text"
@@ -65,9 +65,10 @@ const AddAnswer = (props) => {
           value={answer}
           onBlur={answerOnBlur}
           onChange={answerOnChange}
+          className="flex-fill ms-1"
         />
+        <button className="btn btn-sm btn-success">Submit</button>
       </div>
-      <button>Submit</button>
     </form>
   );
 };

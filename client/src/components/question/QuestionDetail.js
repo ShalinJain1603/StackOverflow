@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import { Badge } from "reactstrap";
@@ -9,7 +9,7 @@ import AnswerReply from "../answer-reply/AnswerReply";
 import AddAnswer from "../answer/AddAnswer";
 import Answer from "../answer/Answer";
 import Modal from "../UI/Modal";
-
+import classes from "./QuestionDetail.module.css";
 const QuestionDetail = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [showModalFlash, setShowModalFlash] = useState(false);
@@ -193,15 +193,10 @@ const QuestionDetail = (props) => {
       return Math.floor(interval) + " minutes";
     }
     return Math.floor(seconds) + " seconds";
-  }
+  };
 
   return (
-    <Fragment>
-      {showModal && <Modal>{promptMessage}</Modal>}
-      {showModalFlash && (
-        <Modal onClick={closeModalFlash}>{successMessage}</Modal>
-      )}
-      {showLoginModal && <Modal>{loginPrompt}</Modal>}
+    <div className="container-fluid">
       {!question && (
         <p className="m-3">
           <div class="d-flex justify-content-center">
@@ -211,115 +206,178 @@ const QuestionDetail = (props) => {
           </div>
         </p>
       )}
-      {question && (
-        <div>
-          <h1 className="d-inline-block"> {question.title} </h1>
-          {question.tags.map((tag) => (
-            <Badge className="bg-warning mx-1 mb-1 text-dark">{tag}</Badge>
-          ))}
-          {!question.resolved && <span className="btn btn-success">Open</span>}
-          {question.resolved && <span className="btn btn-danger">Closed</span>}
-          <br />
-          {showButtons && (
+      {showLoginModal && <Modal>{loginPrompt}</Modal>}
+      {showModal && <Modal>{promptMessage}</Modal>}
+      {showModalFlash && (
+        <Modal onClick={closeModalFlash}>{successMessage}</Modal>
+      )}
+      <div className="row">
+        <div className="col-2 align-items-center d-flex flex-column border-end">
+          {question && (
             <div>
-              <button onClick={ReDirectHandler}>Edit</button>
-              <button onClick={DeleteModal}>Delete</button>
-              <button onClick={ResolveHandler}>Resolve</button>
+              <div className="align-items-center d-flex flex-column m-5">
+                <OverlayTrigger
+                  key="top"
+                  placement="top"
+                  overlay={<Tooltip id={`tooltip-top`}>Upvote</Tooltip>}
+                >
+                  <span onClick={upVoteHandler}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="40"
+                      height="40"
+                      fill={upvote}
+                      class="bi bi-caret-up-square-fill"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4 9h8a.5.5 0 0 0 .374-.832l-4-4.5a.5.5 0 0 0-.748 0l-4 4.5A.5.5 0 0 0 4 11z" />
+                    </svg>
+                  </span>
+                </OverlayTrigger>
+                <h2> {question.voteCount}</h2>
+                <OverlayTrigger
+                  key="bottom"
+                  placement="bottom"
+                  overlay={<Tooltip id={`tooltip-bottom`}>Downvote</Tooltip>}
+                >
+                  <span onClick={downVoteHandler}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="40"
+                      height="40"
+                      fill={downvote}
+                      class="bi bi-caret-down-square-fill"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4 4a.5.5 0 0 0-.374.832l4 4.5a.5.5 0 0 0 .748 0l4-4.5A.5.5 0 0 0 12 6H4z" />
+                    </svg>
+                  </span>
+                </OverlayTrigger>
+              </div>
+              <div className="d-flex justify-content-center m-2 ">
+                Asked by
+                <br />- {question.author.firstname}
+              </div>
+              <p> posted {timeSince(question.postedOn)} ago</p>
               <br />
             </div>
           )}
+          {showButtons && (
+            <div className="d-flex flex-column m-3">
+              <button onClick={ReDirectHandler} className="btn btn-warning m-2">
+                Edit
+              </button>
+              <button onClick={DeleteModal} className="btn btn-danger m-2">
+                Delete
+              </button>
+              <button onClick={ResolveHandler} className="btn btn-info m-2">
+                Resolve
+              </button>
+              <br />
+            </div>
+          )}
+        </div>
+        <div className="col-10 d-flex flex-column">
+          {question && (
+            <div className="m-5 mt-2">
+              <h1 className="d-inline-block display-1">
+                {question.title}
 
-          {question.author.firstname}
-          <p> posted {timeSince(question.postedOn)} ago</p>
-          <p> {question.text}</p>
-          <div className="text-align-center align-items-center d-flex flex-column w-25">
-            <OverlayTrigger
-              key="top"
-              placement="top"
-              overlay={<Tooltip id={`tooltip-top`}>Upvote</Tooltip>}
-            >
-              <span onClick={upVoteHandler} className="ms-3">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="40"
-                  height="40"
-                  fill={upvote}
-                  class="bi bi-caret-up-square-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4 9h8a.5.5 0 0 0 .374-.832l-4-4.5a.5.5 0 0 0-.748 0l-4 4.5A.5.5 0 0 0 4 11z" />
-                </svg>
-              </span>
-            </OverlayTrigger>
-            <h2>
-              {" "}
-              {question.voteCount} Vote
-              {Math.abs(question.voteCount) === 1 ? "" : "s"}
+                <span className="ms-5">
+                  {!question.resolved && (
+                    <span className="btn btn-success">Open</span>
+                  )}
+                  {question.resolved && (
+                    <span className="btn btn-danger">Closed</span>
+                  )}
+                </span>
+              </h1>
+              <br />
+              {question.tags.map((tag) => (
+                <Badge className="bg-warning mx-1 mb-1 text-dark mt-1">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+          )}
+          <h5 className="ms-5">Question</h5>
+          <div className="m-5 mt-0 border">
+            <h2 className="border-bottom p-2 pb-5 mb-0">
+              {question && question.text}
             </h2>
-            <OverlayTrigger
-              key="bottom"
-              placement="bottom"
-              overlay={<Tooltip id={`tooltip-bottom`}>Downvote</Tooltip>}
-            >
-              <span onClick={downVoteHandler} className="ms-3">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="40"
-                  height="40"
-                  fill={downvote}
-                  class="bi bi-caret-down-square-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4 4a.5.5 0 0 0-.374.832l4 4.5a.5.5 0 0 0 .748 0l4-4.5A.5.5 0 0 0 12 6H4z" />
-                </svg>
-              </span>
-            </OverlayTrigger>
-          </div>
-        </div>
-      )}
-      {question && !question.resolved && (
-        <AddAnswer questionId={questionId} setQuestion={setQuestion} />
-      )}
-      {
-        <div>
-          <h1> Sort Answers by</h1>
-          <button onClick={sortByOldest}> Oldest</button>
-          <button onClick={sortByNewest}> Newest</button>
-          <button onClick={sortByVotes}> Most Voted</button>
-        </div>
-      }
-      {question &&
-        question.answers.length &&
-        question.answers.sort(answerSorting()).map((answer) => (
-          <div>
-            <Answer
-              timeSince={timeSince(answer.postedOn)}
-              answer={answer}
-              questionId={questionId}
-              setQuestion={setQuestion}
-            />
-            {!question.resolved && (
-              <AddAnswerReply
-                questionId={questionId}
-                answerId={answer._id}
-                setQuestion={setQuestion}
-              />
-            )}
-            {question && answer.replies.length && (
-              <AllAnswerReplies>
-                {answer.replies.sort(answerSorting()).map((reply) => (
-                  <AnswerReply
-                    reply={reply}
+            <div className="row">
+              <div className="col-md-7">
+                {question && !question.resolved && (
+                  <AddAnswer
                     questionId={questionId}
-                    answerId={answer._id}
                     setQuestion={setQuestion}
                   />
-                ))}
-              </AllAnswerReplies>
-            )}
+                )}
+              </div>
+              <div className="col-md-5 d-flex justify-content-end">
+                <span className="me-1">Sort by </span>
+                <button
+                  onClick={sortByOldest}
+                  className="btn btn-info btn-sm border"
+                >
+                  Oldest
+                </button>
+                <button
+                  onClick={sortByNewest}
+                  className="btn btn-info btn-sm border"
+                >
+                  Newest
+                </button>
+                <button
+                  onClick={sortByVotes}
+                  className="btn btn-info btn-sm border"
+                >
+                  Most Voted
+                </button>
+              </div>
+            </div>
           </div>
-        ))}
-    </Fragment>
+          <h5 className="ms-5">Answers</h5>
+          <div className="d-flex flex-column m-5 mt-0 border">
+            {question &&
+              question.answers.length &&
+              question.answers.sort(answerSorting()).map((answer) => (
+                <div className="border-bottom">
+                  <Answer
+                    answer={answer}
+                    questionId={questionId}
+                    setQuestion={setQuestion}
+                    timeSince={timeSince(answer.postedOn)}
+                  />
+
+                  {!question.resolved && (
+                    <AddAnswerReply
+                      questionId={questionId}
+                      answerId={answer._id}
+                      setQuestion={setQuestion}
+                    />
+                  )}
+
+                  <div className={classes.scroll}>
+                    {question && answer.replies.length && (
+                      <AllAnswerReplies>
+                        {answer.replies.sort(answerSorting()).map((reply) => (
+                          <AnswerReply
+                            reply={reply}
+                            questionId={questionId}
+                            answerId={answer._id}
+                            setQuestion={setQuestion}
+                          />
+                        ))}
+                      </AllAnswerReplies>
+                    )}
+                  </div>
+                </div>
+              ))}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

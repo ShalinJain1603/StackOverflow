@@ -58,12 +58,18 @@ const AddAnswerReply = (props) => {
   return (
     <form onSubmit={replySubmitHandler}>
       {showLoginModal && <Modal>{loginPrompt}</Modal>}
-      <textarea
-        onChange={replyOnChange}
-        onBlur={replyOnBlur}
-        value={reply}
-      ></textarea>
-      <button> Post</button>
+      <div className="d-flex mt-1">
+        <input
+          onChange={replyOnChange}
+          onBlur={replyOnBlur}
+          value={reply}
+          id="reply"
+          type="text"
+          className="flex-fill"
+          placeholder="Add a reply"
+        />
+        <button className="btn btn-success btn-sm"> Post</button>
+      </div>
     </form>
   );
 };
