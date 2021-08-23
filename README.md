@@ -3,15 +3,20 @@
 This project is built using MERN Stack
 
 ## Development
+Run
 
-In the Server directory, you can run
+### `npm install`
+To install node_modules in both the directories
+
+#### In the Server directory, you can run
 
 ### `npm start`
 
 Runs the backend server in the development mode.\
 Open [http://localhost:4000](http://localhost:4000) to view it in the browser.
+- Add a .env file with your credentials
 
-In the client directory, you can run
+#### In the client directory, you can run
 
 ### `npm start`
 
@@ -42,6 +47,10 @@ Your app is ready to be deployed!
 
 Open [https://peaceful-bastion-48042.herokuapp.com](https://peaceful-bastion-48042.herokuapp.com) to view the website
 in the browser
+#### Recommendation for best experience
+
+- Platform : Desktop
+- Browser : Firefox
 
 
 
