@@ -74,34 +74,49 @@ const EditQuestionForm = (props) => {
   return (
     <Fragment>
       {showModal && <Modal onClick={closeModal}>{successMessage}</Modal>}
-      <form onSubmit={formSubmitHandler} className={classes.form}>
-        <div>
-          <label htmlFor="title">Title </label>
-          <input
-            type="text"
-            id="title"
-            onChange={titleOnChange}
-            onBlur={titleOnBlur}
-            value={title}
-          />
-        </div>
-        <div>
-          <label htmlFor="Question">Question </label>
-          <input
-            type="text"
-            id="Question"
-            onChange={questionOnChange}
-            onBlur={questionOnBlur}
-            value={question}
-          />
-          {questionHasError && (
-            <p className={classes.parainvalid}>Question can't be empty</p>
-          )}
-        </div>
-        {currentTags && <TagComponent tags={currentTags} />}
+      <div className="justify-content-center d-flex align-items-center vh-100 flex-column">
+        <h1>Edit Question</h1>
+        <div className="w-50 border d-flex flex-column mx-auto p-3">
+          <form onSubmit={formSubmitHandler}>
+            <div>
+              <label htmlFor="title" className="form-label">
+                Title{" "}
+              </label>
+              <input
+                type="text"
+                id="title"
+                onChange={titleOnChange}
+                onBlur={titleOnBlur}
+                value={title}
+                className="form-control"
+              />
+            </div>
+            <div>
+              <label htmlFor="Question" className="form-label">
+                Question{" "}
+              </label>
+              <input
+                type="text"
+                id="Question"
+                onChange={questionOnChange}
+                onBlur={questionOnBlur}
+                value={question}
+                className="form-control"
+              />
+              {questionHasError && (
+                <p className={classes.parainvalid}>Question can't be empty</p>
+              )}
+            </div>
 
-        {formIsValid && <button className={classes.submit}>Edit</button>}
-      </form>
+            <label className="form-label">Add Tags</label>
+            {currentTags && <TagComponent tags={currentTags} />}
+
+            {formIsValid && (
+              <button className="btn btn-success mt-3 w-100">Edit</button>
+            )}
+          </form>
+        </div>
+      </div>
     </Fragment>
   );
 };

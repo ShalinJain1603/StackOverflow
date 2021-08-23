@@ -31,7 +31,7 @@ const UserProfile = (props) => {
           <div className="row">
             <div className="col-md-4">
               <div className="align-items-center d-flex flex-column mt-3">
-                <div className="card d-flex flex-column w-50">
+                <div className="card d-flex flex-column w-75">
                   <img
                     src={user?.image?.url}
                     className="img-fluid card-img-top"
