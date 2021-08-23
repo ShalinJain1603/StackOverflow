@@ -47,6 +47,10 @@ Your app is ready to be deployed!
 
 Open [https://peaceful-bastion-48042.herokuapp.com](https://peaceful-bastion-48042.herokuapp.com) to view the website
 in the browser
+#### Recommendation for best experience
+
+- Platform : Desktop
+- Browser : Firefox
 
 
 
